@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace LaravelQueryAssertion\Test;
 
-use LaravelQueryAssertion\Test\TestCase;
+use LaravelQueryAssertion\Test\Models\User;
 
 class LaravelQueryAssertionTest extends TestCase
 {
@@ -13,6 +13,9 @@ class LaravelQueryAssertionTest extends TestCase
      */
     public function it_can_test()
     {
-        $this->assertTrue(true);
+        User::create(['email' => 'test@test.com']);
+        $user = User::find(1);
+
+        $this->assertSame(1, $user->id);
     }
 }

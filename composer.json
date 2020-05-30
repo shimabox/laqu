@@ -14,7 +14,6 @@
     "require": {
         "php": "^7.2",
         "illuminate/support": "^6.0|^7.0",
-        "illuminate/database": "^6.0|^7.0",
         "jdorn/sql-formatter": "^1.2"
     },
     "require-dev": {
