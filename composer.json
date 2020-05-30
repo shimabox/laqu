@@ -29,5 +29,8 @@
         "psr-4": {
             "LaravelQueryAssertion\\Test\\": "tests/"
         }
+    },
+    "scripts": {
+        "test": "phpunit"
     }
 }
