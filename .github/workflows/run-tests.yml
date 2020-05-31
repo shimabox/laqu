@@ -1,34 +1,53 @@
 name: "Run Tests"
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: [push, pull_request]
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        php: [7.4, 7.3, 7.2]
+        laravel: [7.*, 6.*, 5.8.*]
+        stability: [prefer-lowest, prefer-stable]
+        include:
+          - laravel: 7.*
+            testbench: 5.*
+          - laravel: 6.*
+            testbench: 4.*
+          - laravel: 5.8.*
+            testbench: 3.8.*
+
+    name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }} - ${{ matrix.stability }}
+
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
     - name: Validate composer.json and composer.lock
       run: composer validate
 
-    - name: Cache Composer packages
+    - name: Cache dependencies
       id: composer-cache
       uses: actions/cache@v2
       with:
-        path: vendor
-        key: ${{ runner.os }}-node-${{ hashFiles('**/composer.lock') }}
+        path: ~/.composer/cache/files
+        key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('**/composer.json') }}
         restore-keys: |
-          ${{ runner.os }}-node-
+          dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php }}
+        coverage: none
 
     - name: Install dependencies
-      if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer install --prefer-dist --no-progress --no-suggest
+      run: |
+        composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" "symfony/console:>=4.3.4" --no-interaction --no-update
+        composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress --no-suggest
 
     - name: Run test suite
       run: composer test
