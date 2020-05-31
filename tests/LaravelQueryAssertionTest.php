@@ -17,14 +17,14 @@ class LaravelQueryAssertionTest extends TestCase
     public function it_can_test()
     {
         $expectedQuery = <<<SQL
-                select
-                    *
-                from
-                    users
-                where
-                    users.id = ?
-                limit 1
-            SQL;
+    select
+        *
+    from
+        users
+    where
+        users.id = ?
+    limit 1
+SQL;
 
         $expectedBindings = [1];
 
