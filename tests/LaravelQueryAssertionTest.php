@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace LaravelQueryAssertion\Test;
 
 use LaravelQueryAssertion\LaravelQueryAssertion;
-use LaravelQueryAssertion\Test\Models\User;
+use LaravelQueryAssertion\Test\Models\Author;
 
 class LaravelQueryAssertionTest extends TestCase
 {
@@ -17,20 +17,20 @@ class LaravelQueryAssertionTest extends TestCase
     public function it_can_test()
     {
         $expectedQuery = <<<SQL
-    select
-        *
-    from
-        users
-    where
-        users.id = ?
-    limit 1
-SQL;
+                select
+                    *
+                from
+                    authors
+                where
+                    authors.id = ?
+                limit 1
+            SQL;
 
         $expectedBindings = [1];
 
         $this->assertQuery(
             function () {
-                $user = User::find(1);
+                Author::find(1);
             },
             $expectedQuery,
             $expectedBindings
