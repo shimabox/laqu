@@ -6,11 +6,11 @@ namespace LaravelQueryAssertion\Test\Models;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 
-class User extends EloquentModel
+class Author extends EloquentModel
 {
-    protected $fillable = ['email'];
+    protected $fillable = ['name'];
 
     public $timestamps = false;
 
-    protected $table = 'users';
+    protected $table = 'authors';
 }
