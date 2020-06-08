@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace LaravelQueryAssertion;
 
 use Illuminate\Support\Facades\DB;
-use SqlFormatter;
+use Doctrine\SqlFormatter\SqlFormatter;
 
 /**
  * Query assertion.
@@ -59,7 +59,7 @@ use SqlFormatter;
  * );
  * </code>
  *
- * @see https://github.com/jdorn/sql-formatter
+ * @see https://github.com/doctrine/sql-formatter
  */
 trait LaravelQueryAssertion
 {
@@ -106,10 +106,11 @@ trait LaravelQueryAssertion
         array $expectedBindings
     ): void {
         $expectedBindings = $this->increaseDimensionsIfSingleDimension($expectedBindings);
+        $sqlFormatter     = new SqlFormatter();
 
         foreach ($queryResult as $index => $result) {
-            $query       = SqlFormatter::compress($expectedQueries[$index] ?? '');
-            $actualQuery = SqlFormatter::compress($result['query']);
+            $query       = $sqlFormatter->compress($expectedQueries[$index] ?? '');
+            $actualQuery = $sqlFormatter->compress($result['query']);
             $this->assertSame(
                 $this->removeQuotationMark($query),
                 $this->removeQuotationMark($actualQuery)
