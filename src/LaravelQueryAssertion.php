@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace LaravelQueryAssertion;
 
-use Illuminate\Support\Facades\DB;
-use Doctrine\SqlFormatter\SqlFormatter;
+use LaravelQueryAssertion\Facades\LaravelQueryHelper;
 
 /**
  * Query assertion.
@@ -83,14 +82,7 @@ trait LaravelQueryAssertion
         $expectedQueries,
         array $expectedBindings = []
     ): void {
-        DB::enableQueryLog();
-
-        $queryCaller();
-
-        $queryResult = DB::getQueryLog();
-
-        DB::disableQueryLog();
-
+        $queryResult = LaravelQueryHelper::queryResult($queryCaller);
         $this->assert($queryResult, (array) $expectedQueries, $expectedBindings);
     }
 
@@ -106,11 +98,11 @@ trait LaravelQueryAssertion
         array $expectedBindings
     ): void {
         $expectedBindings = $this->increaseDimensionsIfSingleDimension($expectedBindings);
-        $sqlFormatter     = new SqlFormatter();
 
         foreach ($queryResult as $index => $result) {
-            $query       = $sqlFormatter->compress($expectedQueries[$index] ?? '');
-            $actualQuery = $sqlFormatter->compress($result['query']);
+            $query       = LaravelQueryHelper::compress($expectedQueries[$index] ?? '');
+            $actualQuery = LaravelQueryHelper::compress($result['query']);
+
             $this->assertSame(
                 $this->removeQuotationMark($query),
                 $this->removeQuotationMark($actualQuery)
