@@ -6,6 +6,8 @@ namespace LaravelQueryAssertion\Test;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Builder;
+use LaravelQueryAssertion\Facades\LaravelQueryHelper as LaravelQueryHelperFacade;
+use LaravelQueryAssertion\LaravelQueryAssertionServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
@@ -15,6 +17,34 @@ abstract class TestCase extends Orchestra
         parent::setUp();
 
         $this->setUpDatabase($this->app);
+    }
+
+    /**
+     * Get package aliases.
+     *
+     * @param \Illuminate\Foundation\Application $app
+     *
+     * @return array
+     */
+    protected function getPackageAliases($app)
+    {
+        return [
+            'LaravelQueryHelper' => LaravelQueryHelperFacade::class,
+        ];
+    }
+
+    /**
+     * Get package providers.
+     *
+     * @param \Illuminate\Foundation\Application $app
+     *
+     * @return array
+     */
+    protected function getPackageProviders($app)
+    {
+        return [
+            LaravelQueryAssertionServiceProvider::class,
+        ];
     }
 
     /**
