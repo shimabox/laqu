@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace LaravelQueryAssertion;
 
-use Illuminate\Support\Facades\DB;
 use LaravelQueryAssertion\Contracts\SqlFormatter as SqlFormatterContract;
+use LaravelQueryAssertion\Facades\LaravelQueryLog;
 
 class LaravelQueryHelper
 {
@@ -20,17 +20,6 @@ class LaravelQueryHelper
     }
 
     /**
-     * Query result.
-     *
-     * @param  callable $queryCaller Process to execute the query.
-     * @return array
-     */
-    public function queryResult(callable $queryCaller): array
-    {
-        return $this->getQueryLog($queryCaller);
-    }
-
-    /**
      * Get the SQL representation of the query after it has been build.
      *
      * @param  callable $queryCaller Process to execute the query.
@@ -38,7 +27,7 @@ class LaravelQueryHelper
      */
     public function buildedQuery($queryCaller): array
     {
-        $queryLog = $this->getQueryLog($queryCaller);
+        $queryLog = LaravelQueryLog::getQueryLog($queryCaller);
         return array_map(function ($query) {
             return $this->build($query['query'], $query['bindings']);
         }, $queryLog);
@@ -76,25 +65,6 @@ class LaravelQueryHelper
     public function compress(string $string): string
     {
         return $this->formatter->compress($string);
-    }
-
-    /**
-     * Get the connection query log.
-     *
-     * @param  callable $queryCaller
-     * @return array
-     */
-    private function getQueryLog(callable $queryCaller): array
-    {
-        DB::enableQueryLog();
-
-        $queryCaller();
-
-        $queryResult = DB::getQueryLog();
-
-        DB::disableQueryLog();
-
-        return $queryResult;
     }
 
     /**
