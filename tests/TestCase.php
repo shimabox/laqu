@@ -7,6 +7,7 @@ namespace LaravelQueryAssertion\Test;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Builder;
 use LaravelQueryAssertion\Facades\LaravelQueryHelper as LaravelQueryHelperFacade;
+use LaravelQueryAssertion\Facades\LaravelQueryLog as LaravelQueryLogFacade;
 use LaravelQueryAssertion\LaravelQueryAssertionServiceProvider;
 use LaravelQueryAssertion\Test\Models\Author;
 use Orchestra\Testbench\TestCase as Orchestra;
@@ -31,6 +32,7 @@ abstract class TestCase extends Orchestra
     {
         return [
             'LaravelQueryHelper' => LaravelQueryHelperFacade::class,
+            'LaravelQueryLog'    => LaravelQueryLogFacade::class,
         ];
     }
 
