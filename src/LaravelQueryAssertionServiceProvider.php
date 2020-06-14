@@ -22,5 +22,9 @@ class LaravelQueryAssertionServiceProvider extends ServiceProvider
                 [SqlFormatterContract::class]
             );
         });
+
+        $this->app->singleton('laravelQueryLog', function ($app) {
+            return $app->make(LaravelQueryLog::class);
+        });
     }
 }
