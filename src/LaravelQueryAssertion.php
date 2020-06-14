@@ -101,11 +101,11 @@ trait LaravelQueryAssertion
         $expectedBindings = $this->increaseDimensionsIfSingleDimension($expectedBindings);
 
         foreach ($queryLog as $index => $log) {
-            $query       = LaravelQueryHelper::compress($expectedQueries[$index] ?? '');
-            $actualQuery = LaravelQueryHelper::compress($log['query']);
+            $expectedQuery = LaravelQueryHelper::compress($expectedQueries[$index] ?? '');
+            $actualQuery   = LaravelQueryHelper::compress($log['query']);
 
             $this->assertSame(
-                $this->removeQuotationMark($query),
+                $this->removeQuotationMark($expectedQuery),
                 $this->removeQuotationMark($actualQuery)
             );
 
