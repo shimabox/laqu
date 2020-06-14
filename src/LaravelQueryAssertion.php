@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaravelQueryAssertion;
 
 use LaravelQueryAssertion\Facades\LaravelQueryHelper;
+use LaravelQueryAssertion\Facades\LaravelQueryLog;
 
 /**
  * Query assertion.
@@ -82,36 +83,36 @@ trait LaravelQueryAssertion
         $expectedQueries,
         array $expectedBindings = []
     ): void {
-        $queryResult = LaravelQueryHelper::queryResult($queryCaller);
-        $this->assert($queryResult, (array) $expectedQueries, $expectedBindings);
+        $queryLog = LaravelQueryLog::getQueryLog($queryCaller);
+        $this->assert($queryLog, (array) $expectedQueries, $expectedBindings);
     }
 
     /**
-     * @param  array $queryResult
+     * @param  array $queryLog
      * @param  array $expectedQueries
      * @param  array $expectedBindings
      * @return void
      */
     private function assert(
-        array $queryResult,
+        array $queryLog,
         array $expectedQueries,
         array $expectedBindings
     ): void {
         $expectedBindings = $this->increaseDimensionsIfSingleDimension($expectedBindings);
 
-        foreach ($queryResult as $index => $result) {
-            $query       = LaravelQueryHelper::compress($expectedQueries[$index] ?? '');
-            $actualQuery = LaravelQueryHelper::compress($result['query']);
+        foreach ($queryLog as $index => $log) {
+            $expectedQuery = LaravelQueryHelper::compress($expectedQueries[$index] ?? '');
+            $actualQuery   = LaravelQueryHelper::compress($log['query']);
 
             $this->assertSame(
-                $this->removeQuotationMark($query),
+                $this->removeQuotationMark($expectedQuery),
                 $this->removeQuotationMark($actualQuery)
             );
 
             $bindings = $expectedBindings[$index] ?? [];
             $this->assertSame(
                 $bindings,
-                $result['bindings']
+                $log['bindings']
             );
         }
     }
