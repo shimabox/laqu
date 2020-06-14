@@ -10,6 +10,13 @@ use LaravelQueryAssertion\SqlFormatter\SqlFormatter;
 
 class LaravelQueryAssertionServiceProvider extends ServiceProvider
 {
+    public function boot()
+    {
+        $this->app->singleton('laravelQueryLog', function ($app) {
+            return $app->make(LaravelQueryLog::class);
+        });
+    }
+
     public function register()
     {
         $this->app->bind(SqlFormatterContract::class, function ($app, $param) {
@@ -21,10 +28,6 @@ class LaravelQueryAssertionServiceProvider extends ServiceProvider
                 LaravelQueryHelper::class,
                 [SqlFormatterContract::class]
             );
-        });
-
-        $this->app->singleton('laravelQueryLog', function ($app) {
-            return $app->make(LaravelQueryLog::class);
         });
     }
 }
