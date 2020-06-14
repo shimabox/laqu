@@ -8,6 +8,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Builder;
 use LaravelQueryAssertion\Facades\LaravelQueryHelper as LaravelQueryHelperFacade;
 use LaravelQueryAssertion\LaravelQueryAssertionServiceProvider;
+use LaravelQueryAssertion\Test\Models\Author;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
@@ -81,5 +82,7 @@ abstract class TestCase extends Orchestra
             $table->string('name', 100);
             $table->timestamps();
         });
+
+        Author::create(['name' => 'William Shakespeare']);
     }
 }
