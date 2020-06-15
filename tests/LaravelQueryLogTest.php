@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace LaravelQueryAssertion\Test;
+namespace Laqu\Test;
 
-use LaravelQueryAssertion\Facades\LaravelQueryLog;
-use LaravelQueryAssertion\Test\Models\Author;
+use Laqu\Facades\LaravelQueryLog;
+use Laqu\Test\Models\Author;
 
 class LaravelQueryLogTest extends TestCase
 {

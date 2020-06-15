@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace LaravelQueryAssertion\Test;
+namespace Laqu\Test;
 
-use LaravelQueryAssertion\LaravelQueryAssertion;
-use LaravelQueryAssertion\Test\Models\Author;
+use Laqu\LaravelQueryAssertion;
+use Laqu\Test\Models\Author;
 
 class LaravelQueryAssertionTest extends TestCase
 {

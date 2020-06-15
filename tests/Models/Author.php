@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LaravelQueryAssertion\Test\Models;
+namespace Laqu\Test\Models;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 

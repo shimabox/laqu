@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace LaravelQueryAssertion;
+namespace Laqu;
 
-use LaravelQueryAssertion\Contracts\SqlFormatter as SqlFormatterContract;
-use LaravelQueryAssertion\Facades\LaravelQueryLog;
+use Laqu\Contracts\SqlFormatter as SqlFormatterContract;
+use Laqu\Facades\LaravelQueryLog;
 
 class LaravelQueryHelper
 {

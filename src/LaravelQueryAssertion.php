@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace LaravelQueryAssertion;
+namespace Laqu;
 
-use LaravelQueryAssertion\Facades\LaravelQueryHelper;
-use LaravelQueryAssertion\Facades\LaravelQueryLog;
+use Laqu\Facades\LaravelQueryHelper;
+use Laqu\Facades\LaravelQueryLog;
 
 /**
  * Query assertion.

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace LaravelQueryAssertion\SqlFormatter;
+namespace Laqu\SqlFormatter;
 
 use Doctrine\SqlFormatter\Highlighter as DoctrineHighlighter;
 use Doctrine\SqlFormatter\SqlFormatter as DoctrineSqlFormatter;
-use LaravelQueryAssertion\Contracts\SqlFormatter as SqlFormatterContract;
+use Laqu\Contracts\SqlFormatter as SqlFormatterContract;
 
 /**
  * @see https://github.com/doctrine/sql-formatter

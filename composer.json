@@ -1,10 +1,10 @@
 {
-    "name": "shimabox/laravel-query-assertion",
-    "description": "Assert DB query executed by laravel.",
-    "keywords": ["laravel", "query", "assertion"],
+    "name": "shimabox/laqu",
+    "description": "laqu is Laravel Db Query Helper.",
+    "keywords": ["laravel", "eloquent", "query", "assertion"],
     "type": "library",
     "license": "MIT",
-    "homepage": "https://github.com/shimabox/laravel-query-assertion",
+    "homepage": "https://github.com/shimabox/laqu",
     "authors": [
         {
             "name": "shimabox",
@@ -22,12 +22,12 @@
     },
     "autoload": {
         "psr-4": {
-            "LaravelQueryAssertion\\": "src/"
+            "Laqu\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "LaravelQueryAssertion\\Test\\": "tests/"
+            "Laqu\\Test\\": "tests/"
         }
     },
     "scripts": {
