@@ -12,8 +12,8 @@ class LaquServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this->app->singleton('laravelQueryLog', function ($app) {
-            return $app->make(LaravelQueryLog::class);
+        $this->app->singleton('queryLog', function ($app) {
+            return $app->make(QueryLog::class);
         });
     }
 
@@ -23,9 +23,9 @@ class LaquServiceProvider extends ServiceProvider
             return new SqlFormatter($param[0] ?? null);
         });
 
-        $this->app->singleton('laravelQueryHelper', function ($app) {
+        $this->app->singleton('queryHelper', function ($app) {
             return $app->make(
-                LaravelQueryHelper::class,
+                QueryHelper::class,
                 [SqlFormatterContract::class]
             );
         });

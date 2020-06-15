@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Laqu\Test;
 
-use Laqu\LaravelQueryAssertion;
+use Laqu\QueryAssertion;
 use Laqu\Test\Models\Author;
 
-class LaravelQueryAssertionTest extends TestCase
+class QueryAssertionTest extends TestCase
 {
-    use LaravelQueryAssertion;
+    use QueryAssertion;
 
     /**
      * @test

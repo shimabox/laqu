@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\Facade;
  * @method static string highlight(string $string)
  * @method static string compress(string $string)
  *
- * @see \Laqu\LaravelQueryHelper
+ * @see \Laqu\QueryHelper
  */
-class LaravelQueryHelper extends Facade
+class QueryHelper extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'laravelQueryHelper';
+        return 'queryHelper';
     }
 }

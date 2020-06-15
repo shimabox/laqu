@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Laqu;
 
-use Laqu\Facades\LaravelQueryHelper;
-use Laqu\Facades\LaravelQueryLog;
+use Laqu\Facades\QueryHelper;
+use Laqu\Facades\QueryLog;
 
 /**
  * Query assertion.
@@ -61,7 +61,7 @@ use Laqu\Facades\LaravelQueryLog;
  *
  * @see https://github.com/doctrine/sql-formatter
  */
-trait LaravelQueryAssertion
+trait QueryAssertion
 {
     /**
      * If true, leave quotation mark attached to the query returned by `DB::getQueryLog()`.
@@ -83,7 +83,7 @@ trait LaravelQueryAssertion
         $expectedQueries,
         array $expectedBindings = []
     ): void {
-        $queryLog = LaravelQueryLog::getQueryLog($queryCaller);
+        $queryLog = QueryLog::getQueryLog($queryCaller);
         $this->assert($queryLog, (array) $expectedQueries, $expectedBindings);
     }
 
@@ -101,8 +101,8 @@ trait LaravelQueryAssertion
         $expectedBindings = $this->increaseDimensionsIfSingleDimension($expectedBindings);
 
         foreach ($queryLog as $index => $log) {
-            $expectedQuery = LaravelQueryHelper::compress($expectedQueries[$index] ?? '');
-            $actualQuery   = LaravelQueryHelper::compress($log['query']);
+            $expectedQuery = QueryHelper::compress($expectedQueries[$index] ?? '');
+            $actualQuery   = QueryHelper::compress($log['query']);
 
             $this->assertSame(
                 $this->removeQuotationMark($expectedQuery),

@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @method static array getQueryLog(callable $queryCaller)
  *
- * @see \Laqu\LaravelQueryLog
+ * @see \Laqu\QueryLog
  */
-class LaravelQueryLog extends Facade
+class QueryLog extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'laravelQueryLog';
+        return 'queryLog';
     }
 }

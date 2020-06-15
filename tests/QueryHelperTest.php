@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Laqu\Test;
 
-use Laqu\Facades\LaravelQueryHelper;
+use Laqu\Facades\QueryHelper;
 use Laqu\Test\Models\Author;
 
-class LaravelQueryHelperTest extends TestCase
+class QueryHelperTest extends TestCase
 {
     /**
      * @test
      */
     public function it_can_return_a_query_after_the_build()
     {
-        $actual = LaravelQueryHelper::buildedQuery(function () {
+        $actual = QueryHelper::buildedQuery(function () {
             Author::all();
         });
 
@@ -29,7 +29,7 @@ class LaravelQueryHelperTest extends TestCase
      */
     public function it_can_return_queries_after_the_build()
     {
-        $actual = LaravelQueryHelper::buildedQuery(function () {
+        $actual = QueryHelper::buildedQuery(function () {
             $author = Author::find(1);
             $author->delete();
         });
@@ -47,7 +47,7 @@ class LaravelQueryHelperTest extends TestCase
      */
     public function it_returns_blank_if_passed_an_empty_closure()
     {
-        $actual = LaravelQueryHelper::buildedQuery(function () {
+        $actual = QueryHelper::buildedQuery(function () {
         });
 
         $this->assertCount(0, $actual);

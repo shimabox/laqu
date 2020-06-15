@@ -6,7 +6,7 @@ namespace Laqu;
 
 use Illuminate\Database\Connection;
 
-class LaravelQueryLog
+class QueryLog
 {
     private $connection;
 
