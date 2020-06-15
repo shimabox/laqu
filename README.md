@@ -1,4 +1,4 @@
-# laravel-query-assertion
-Assert DB query executed by laravel.
+# Laqu
+Laqu is Laravel Db Query Helper.
 
-![Run Tests](https://github.com/shimabox/laravel-query-assertion/workflows/Run%20Tests/badge.svg?branch=master)
+![Run Tests](https://github.com/shimabox/laqu/workflows/Run%20Tests/badge.svg?branch=master)

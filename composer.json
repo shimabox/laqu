@@ -1,6 +1,6 @@
 {
     "name": "shimabox/laqu",
-    "description": "laqu is Laravel Db Query Helper.",
+    "description": "Laqu is Laravel Db Query Helper.",
     "keywords": ["laravel", "eloquent", "query", "assertion"],
     "type": "library",
     "license": "MIT",
