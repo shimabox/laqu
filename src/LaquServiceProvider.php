@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace LaravelQueryAssertion;
+namespace Laqu;
 
 use Illuminate\Support\ServiceProvider;
-use LaravelQueryAssertion\Contracts\SqlFormatter as SqlFormatterContract;
-use LaravelQueryAssertion\SqlFormatter\SqlFormatter;
+use Laqu\Contracts\SqlFormatter as SqlFormatterContract;
+use Laqu\SqlFormatter\SqlFormatter;
 
-class LaravelQueryAssertionServiceProvider extends ServiceProvider
+class LaquServiceProvider extends ServiceProvider
 {
     public function boot()
     {

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace LaravelQueryAssertion\Test;
+namespace Laqu\Test;
 
-use LaravelQueryAssertion\Facades\LaravelQueryHelper;
-use LaravelQueryAssertion\Test\Models\Author;
+use Laqu\Facades\LaravelQueryHelper;
+use Laqu\Test\Models\Author;
 
 class LaravelQueryHelperTest extends TestCase
 {
@@ -47,7 +47,8 @@ class LaravelQueryHelperTest extends TestCase
      */
     public function it_returns_blank_if_passed_an_empty_closure()
     {
-        $actual = LaravelQueryHelper::buildedQuery(function () {});
+        $actual = LaravelQueryHelper::buildedQuery(function () {
+        });
 
         $this->assertCount(0, $actual);
         $this->assertEmpty($actual);

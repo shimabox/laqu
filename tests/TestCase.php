@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace LaravelQueryAssertion\Test;
+namespace Laqu\Test;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Builder;
-use LaravelQueryAssertion\Facades\LaravelQueryHelper as LaravelQueryHelperFacade;
-use LaravelQueryAssertion\Facades\LaravelQueryLog as LaravelQueryLogFacade;
-use LaravelQueryAssertion\LaravelQueryAssertionServiceProvider;
-use LaravelQueryAssertion\Test\Models\Author;
+use Laqu\Facades\LaravelQueryHelper as LaravelQueryHelperFacade;
+use Laqu\Facades\LaravelQueryLog as LaravelQueryLogFacade;
+use Laqu\LaquServiceProvider;
+use Laqu\Test\Models\Author;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
@@ -46,7 +46,7 @@ abstract class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            LaravelQueryAssertionServiceProvider::class,
+            LaquServiceProvider::class,
         ];
     }
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LaravelQueryAssertion\Contracts;
+namespace Laqu\Contracts;
 
 /**
  * @see https://github.com/doctrine/sql-formatter

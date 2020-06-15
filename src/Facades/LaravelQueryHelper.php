@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LaravelQueryAssertion\Facades;
+namespace Laqu\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static string highlight(string $string)
  * @method static string compress(string $string)
  *
- * @see \LaravelQueryAssertion\LaravelQueryHelper
+ * @see \Laqu\LaravelQueryHelper
  */
 class LaravelQueryHelper extends Facade
 {

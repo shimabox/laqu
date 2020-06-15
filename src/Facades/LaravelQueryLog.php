@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace LaravelQueryAssertion\Facades;
+namespace Laqu\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static array getQueryLog(callable $queryCaller)
  *
- * @see \LaravelQueryAssertion\LaravelQueryLog
+ * @see \Laqu\LaravelQueryLog
  */
 class LaravelQueryLog extends Facade
 {
