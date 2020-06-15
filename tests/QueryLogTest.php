@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Laqu\Test;
 
-use Laqu\Facades\LaravelQueryLog;
+use Laqu\Facades\QueryLog;
 use Laqu\Test\Models\Author;
 
-class LaravelQueryLogTest extends TestCase
+class QueryLogTest extends TestCase
 {
     /**
      * @test
      */
     public function it_can_get_the_results_of_laravel_query_log()
     {
-        $actual = LaravelQueryLog::getQueryLog(function () {
+        $actual = QueryLog::getQueryLog(function () {
             Author::find(1);
         });
 

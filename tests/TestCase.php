@@ -6,8 +6,8 @@ namespace Laqu\Test;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Builder;
-use Laqu\Facades\LaravelQueryHelper as LaravelQueryHelperFacade;
-use Laqu\Facades\LaravelQueryLog as LaravelQueryLogFacade;
+use Laqu\Facades\QueryHelper as QueryHelperFacade;
+use Laqu\Facades\QueryLog as QueryLogFacade;
 use Laqu\LaquServiceProvider;
 use Laqu\Test\Models\Author;
 use Orchestra\Testbench\TestCase as Orchestra;
@@ -31,8 +31,8 @@ abstract class TestCase extends Orchestra
     protected function getPackageAliases($app)
     {
         return [
-            'LaravelQueryHelper' => LaravelQueryHelperFacade::class,
-            'LaravelQueryLog'    => LaravelQueryLogFacade::class,
+            'QueryHelper' => QueryHelperFacade::class,
+            'QueryLog'    => QueryLogFacade::class,
         ];
     }
 

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Laqu;
 
 use Laqu\Contracts\SqlFormatter as SqlFormatterContract;
-use Laqu\Facades\LaravelQueryLog;
+use Laqu\Facades\QueryLog;
 
-class LaravelQueryHelper
+class QueryHelper
 {
     /**
      * @var SqlFormatterContract
@@ -27,7 +27,7 @@ class LaravelQueryHelper
      */
     public function buildedQuery($queryCaller): array
     {
-        $queryLog = LaravelQueryLog::getQueryLog($queryCaller);
+        $queryLog = QueryLog::getQueryLog($queryCaller);
         return array_map(function ($query) {
             return $this->build($query['query'], $query['bindings']);
         }, $queryLog);
@@ -70,13 +70,13 @@ class LaravelQueryHelper
     /**
      * Returns the emulated SQL string
      *
-     * @param $rawSql
-     * @param $parameters
+     * @param  string               $rawSql
+     * @param  array                $parameters
      * @return string|string[]|null
      *
      * @see https://github.com/panique/pdo-debug/blob/master/pdo-debug.php
      */
-    private function build($rawSql, $parameters)
+    private function build(string $rawSql, array $parameters)
     {
         $keys   = [];
         $values = [];
