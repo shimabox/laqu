@@ -6,8 +6,6 @@ namespace Laqu\Test;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Builder;
-use Laqu\Facades\QueryHelper as QueryHelperFacade;
-use Laqu\Facades\QueryLog as QueryLogFacade;
 use Laqu\LaquServiceProvider;
 use Laqu\Test\Models\Author;
 use Orchestra\Testbench\TestCase as Orchestra;
@@ -19,21 +17,6 @@ abstract class TestCase extends Orchestra
         parent::setUp();
 
         $this->setUpDatabase($this->app);
-    }
-
-    /**
-     * Get package aliases.
-     *
-     * @param \Illuminate\Foundation\Application $app
-     *
-     * @return array
-     */
-    protected function getPackageAliases($app)
-    {
-        return [
-            'QueryHelper' => QueryHelperFacade::class,
-            'QueryLog'    => QueryLogFacade::class,
-        ];
     }
 
     /**
