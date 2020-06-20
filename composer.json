@@ -33,6 +33,8 @@
         }
     },
     "scripts": {
+        "phpcs": "php-cs-fixer fix --dry-run --diff --diff-format udiff --config=.php_cs.dist",
+        "phpcs:fix": "php-cs-fixer fix --diff --diff-format udiff --config=.php_cs.dist --verbose",
         "test": "phpunit"
     }
 }
