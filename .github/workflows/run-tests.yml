@@ -50,7 +50,7 @@ jobs:
         composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" "symfony/console:>=4.3.4" --no-interaction --no-update
         composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress --no-suggest
 
-    - name: php-cs-fixer
+    - name: Run php-cs-fixer
       run: composer phpcs
 
     - name: Run test suite
