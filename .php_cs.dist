@@ -169,6 +169,8 @@ return PhpCsFixer\Config::create()
         'php_unit_ordered_covers' => true,
         // PHPDoc should contain `@param` for all params.
         'phpdoc_add_missing_param_annotation' => ['only_untyped' => false],
+        // All items of the given phpdoc tags must be either left-aligned or (by default) aligned vertically.
+        'phpdoc_align' => true,
         // Docblocks should have the same indentation as the documented subject.
         'phpdoc_indent' => true,
         // Fix PHPDoc inline tags, make `@inheritdoc` always inline.
