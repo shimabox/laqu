@@ -93,7 +93,6 @@ SQL;
 
     /**
      * @test
-     * @group hoge
      */
     public function in_query_builder_it_can_check_for_named_parameter()
     {
