@@ -81,6 +81,8 @@ class QueryHelper
         $keys   = [];
         $values = [];
 
+        $adjustedParameters = $this->adjustParameters($rawSql, $parameters);
+
         /*
          |----------------------------------------------------------------------
          | Get longest keys first, sot the regex replacement doesn't
@@ -89,14 +91,14 @@ class QueryHelper
          |----------------------------------------------------------------------
          */
         $isNamedMarkers = false;
-        if (count($parameters) && is_string(key($parameters))) {
-            uksort($parameters, function ($k1, $k2) {
+        if (count($adjustedParameters) && is_string(key($adjustedParameters))) {
+            uksort($adjustedParameters, function ($k1, $k2) {
                 return strlen($k2) - strlen($k1);
             });
             $isNamedMarkers = true;
         }
 
-        foreach ($parameters as $key => $value) {
+        foreach ($adjustedParameters as $key => $value) {
             // check if named parameters (':param') or anonymous parameters ('?') are used
             if (is_string($key)) {
                 $keys[] = '/:' . ltrim($key, ':') . '/';
@@ -123,5 +125,41 @@ class QueryHelper
         } else {
             return preg_replace($keys, $values, $rawSql, 1, $count);
         }
+    }
+
+    /**
+     * Adjust bind parameters.
+     *
+     * // When using queryBuilder.
+     * QueryHelper::buildedQuery(function () use ($query) {
+     *     Author::whereRaw('name like :name', ['name' => '%Shakespeare'])->get();
+     * });
+     *
+     * In the above case, parameter will be [0 => "% Shakespeare"] and query of
+     * "select * from authors where like like: name" cannot be assembled.
+     * Therefore, parameter is adjusted so that ['name' => "% Shakespeare"].
+     *
+     * @param  string $rawSql
+     * @param  array  $parameters
+     * @return array
+     */
+    private function adjustParameters(string $rawSql, array $parameters): array
+    {
+        $returnParameters = $parameters;
+        $index            = 0;
+        preg_replace_callback('/\?|:(\w+)/', function ($matches) use (&$returnParameters, &$index) {
+            if (
+                $matches[0] !== '?'
+                && ! isset($returnParameters[$matches[0]])
+                && ! isset($returnParameters[$matches[1]])
+            ) {
+                $value = $returnParameters[$index];
+                $returnParameters[$matches[1]] = $value;
+                unset($returnParameters[$index]);
+            }
+            ++$index;
+        }, $rawSql);
+
+        return $returnParameters;
     }
 }
