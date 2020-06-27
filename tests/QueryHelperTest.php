@@ -46,7 +46,7 @@ class QueryHelperTest extends TestCase
     /**
      * @test
      */
-    public function in_query_builder_it_can_check_for_question_mark_parameter()
+    public function it_can_assert_question_mark_parameters_in_QueryBuilder()
     {
         $query = <<<SQL
     select
@@ -70,7 +70,7 @@ SQL;
     /**
      * @test
      */
-    public function in_raw_sql_it_can_check_for_question_mark_parameter()
+    public function it_can_assert_question_mark_parameters_in_raw_sql()
     {
         $query = <<<SQL
     select
@@ -94,7 +94,7 @@ SQL;
     /**
      * @test
      */
-    public function in_query_builder_it_can_check_for_named_parameter()
+    public function it_can_assert_for_named_parameter_in_QueryBuilder()
     {
         $query = <<<SQL
     select
@@ -121,7 +121,7 @@ SQL;
     /**
      * @test
      */
-    public function in_raw_sql_it_can_check_for_named_parameter()
+    public function it_can_assert_for_named_parameter_in_raw_sql()
     {
         $query = <<<SQL
     select
@@ -145,7 +145,7 @@ SQL;
     /**
      * @test
      */
-    public function in_query_builder_it_can_check_for_named_parameter_and_question_mark_parameter()
+    public function it_can_assert_for_named_parameter_and_question_mark_parameter_in_QueryBuilder()
     {
         $from = '2020-01-01';
         $to   = '2020-12-31';
@@ -177,7 +177,7 @@ SQL;
     /**
      * @test
      */
-    public function in_raw_sql_it_can_check_for_named_parameter_and_question_mark_parameter()
+    public function it_can_assert_for_named_parameter_and_question_mark_parameter_in_raw_sql()
     {
         $from = '2020-01-01';
         $to   = '2020-12-31';
