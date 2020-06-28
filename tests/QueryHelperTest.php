@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laqu\Test;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Laqu\Facades\QueryHelper;
 use Laqu\Test\Models\Author;
@@ -113,8 +114,9 @@ class QueryHelperTest extends TestCase
      */
     public function it_can_assert_for_named_parameter_and_question_mark_parameter_in_QueryBuilder()
     {
-        $from = '2020-01-01';
-        $to   = '2020-12-31';
+        $now  = Carbon::now();
+        $from = $now->clone()->subDay();
+        $to   = $now->clone()->addDay();
 
         $buildedQuery = QueryHelper::buildedQuery(function () use ($from, $to) {
             Author::whereIn('id', [1, 2])

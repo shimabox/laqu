@@ -10,7 +10,7 @@ class Author extends EloquentModel
 {
     protected $fillable = ['name'];
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $table = 'authors';
 }

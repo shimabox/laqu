@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laqu;
 
+use Carbon\Carbon;
 use Laqu\Contracts\SqlFormatter as SqlFormatterContract;
 use Laqu\Facades\QueryLog;
 
@@ -117,6 +118,8 @@ class QueryHelper
                 $values[] = implode(',', $value);
             } elseif (is_null($value)) {
                 $values[] = 'NULL';
+            } elseif ($value instanceof Carbon) {
+                $values[] = "'" . (string) $value . "'";
             }
         }
 
