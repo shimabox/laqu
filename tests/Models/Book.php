@@ -8,9 +8,14 @@ use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 class Book extends EloquentModel
 {
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'author_id'];
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $table = 'books';
+
+    public function author()
+    {
+        return $this->belongsTo(Author::class);
+    }
 }
