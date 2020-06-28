@@ -115,8 +115,8 @@ class QueryHelperTest extends TestCase
     public function it_can_assert_for_named_parameter_and_question_mark_parameter_in_QueryBuilder()
     {
         $now  = Carbon::now();
-        $from = $now->clone()->subDay();
-        $to   = $now->clone()->addDay();
+        $from = $now->copy()->subDay();
+        $to   = $now->copy()->addDay();
 
         $buildedQuery = QueryHelper::buildedQuery(function () use ($from, $to) {
             Author::whereIn('id', [1, 2])
