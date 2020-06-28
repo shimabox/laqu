@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laqu\Test;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Laqu\Facades\QueryHelper;
 use Laqu\Test\Models\Author;
@@ -48,16 +49,7 @@ class QueryHelperTest extends TestCase
      */
     public function it_can_assert_question_mark_parameters_in_QueryBuilder()
     {
-        $query = <<<SQL
-    select
-        *
-    from
-        authors
-    where
-        id = ?
-SQL;
-
-        $buildedQuery = QueryHelper::buildedQuery(function () use ($query) {
+        $buildedQuery = QueryHelper::buildedQuery(function () {
             Author::where('id', '=', 1)->get();
         });
 
@@ -72,16 +64,8 @@ SQL;
      */
     public function it_can_assert_question_mark_parameters_in_raw_sql()
     {
-        $query = <<<SQL
-    select
-        *
-    from
-        authors
-    where
-        id = ?
-SQL;
-
-        $buildedQuery = QueryHelper::buildedQuery(function () use ($query) {
+        $buildedQuery = QueryHelper::buildedQuery(function () {
+            $query = 'select * from authors where id = ?';
             DB::select($query, [1]);
         });
 
@@ -96,16 +80,7 @@ SQL;
      */
     public function it_can_assert_for_named_parameter_in_QueryBuilder()
     {
-        $query = <<<SQL
-    select
-        *
-    from
-        authors
-    where
-        name like :name
-SQL;
-
-        $buildedQuery = QueryHelper::buildedQuery(function () use ($query) {
+        $buildedQuery = QueryHelper::buildedQuery(function () {
             Author::whereRaw(
                 'name like :name',
                 ['name' => '%Shakespeare']
@@ -123,16 +98,8 @@ SQL;
      */
     public function it_can_assert_for_named_parameter_in_raw_sql()
     {
-        $query = <<<SQL
-    select
-        *
-    from
-        authors
-    where
-        name like :name
-SQL;
-
-        $buildedQuery = QueryHelper::buildedQuery(function () use ($query) {
+        $buildedQuery = QueryHelper::buildedQuery(function () {
+            $query = 'select * from authors where name like :name';
             DB::select($query, ['name' => '%Shakespeare']);
         });
 
@@ -147,21 +114,11 @@ SQL;
      */
     public function it_can_assert_for_named_parameter_and_question_mark_parameter_in_QueryBuilder()
     {
-        $from = '2020-01-01';
-        $to   = '2020-12-31';
+        $now  = Carbon::now();
+        $from = $now->copy()->subDay();
+        $to   = $now->copy()->addDay();
 
-        $query = <<<SQL
-    select
-        *
-    from
-        authors
-    where
-        id in (?, ?)
-    and
-        name like :name
-SQL;
-
-        $buildedQuery = QueryHelper::buildedQuery(function () use ($query, $from, $to) {
+        $buildedQuery = QueryHelper::buildedQuery(function () use ($from, $to) {
             Author::whereIn('id', [1, 2])
                 ->whereRaw('name like :name', ['name' => '%Shakespeare'])
                 ->whereBetween('updated_at', [$from, $to])
@@ -169,38 +126,7 @@ SQL;
         });
 
         $actual   = QueryHelper::compress($buildedQuery[0]);
-        $expected = 'select * from authors where id in (1, 2) and name like \'%Shakespeare\' and updated_at between \'2020-01-01\' and \'2020-12-31\'';
-
-        $this->assertSame($expected, $this->removeQuotationMark($actual));
-    }
-
-    /**
-     * @test
-     */
-    public function it_can_assert_for_named_parameter_and_question_mark_parameter_in_raw_sql()
-    {
-        $from = '2020-01-01';
-        $to   = '2020-12-31';
-
-        $query = <<<SQL
-    select
-        *
-    from
-        authors
-    where
-        id in (?, ?)
-    and
-        name like :name
-    and
-        updated_at between ? and ?
-SQL;
-
-        $buildedQuery = QueryHelper::buildedQuery(function () use ($query, $from, $to) {
-            DB::select($query, [1, 2, 'name' => '%Shakespeare', $from, $to]);
-        });
-
-        $actual   = QueryHelper::compress($buildedQuery[0]);
-        $expected = 'select * from authors where id in (1, 2) and name like \'%Shakespeare\' and updated_at between \'2020-01-01\' and \'2020-12-31\'';
+        $expected = 'select * from authors where id in (1, 2) and name like \'%Shakespeare\' and updated_at between \'' . $from . '\' and \'' . $to . '\'';
 
         $this->assertSame($expected, $this->removeQuotationMark($actual));
     }
