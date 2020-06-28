@@ -124,26 +124,7 @@ class QueryHelperTest extends TestCase
         });
 
         $actual   = QueryHelper::compress($buildedQuery[0]);
-        $expected = 'select * from authors where id in (1, 2) and name like \'%Shakespeare\' and updated_at between \'2020-01-01\' and \'2020-12-31\'';
-
-        $this->assertSame($expected, $this->removeQuotationMark($actual));
-    }
-
-    /**
-     * @test
-     */
-    public function it_can_assert_for_named_parameter_and_question_mark_parameter_in_raw_sql()
-    {
-        $from = '2020-01-01';
-        $to   = '2020-12-31';
-
-        $buildedQuery = QueryHelper::buildedQuery(function () use ($from, $to) {
-            $query = 'select * from authors where id in (?, ?) and name like :name and updated_at between ? and ?';
-            DB::select($query, [1, 2, 'name' => '%Shakespeare', $from, $to]);
-        });
-
-        $actual   = QueryHelper::compress($buildedQuery[0]);
-        $expected = 'select * from authors where id in (1, 2) and name like \'%Shakespeare\' and updated_at between \'2020-01-01\' and \'2020-12-31\'';
+        $expected = 'select * from authors where id in (1, 2) and name like \'%Shakespeare\' and updated_at between \'' . $from . '\' and \'' . $to . '\'';
 
         $this->assertSame($expected, $this->removeQuotationMark($actual));
     }
