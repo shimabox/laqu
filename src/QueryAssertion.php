@@ -115,6 +115,8 @@ trait QueryAssertion
                 $log['bindings']
             );
         }
+
+        $this->assertCount(count($expectedQueries), $queryLog);
     }
 
     /**
