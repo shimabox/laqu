@@ -8,6 +8,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Builder;
 use Laqu\LaquServiceProvider;
 use Laqu\Test\Models\Author;
+use Laqu\Test\Models\Book;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
@@ -58,6 +59,7 @@ abstract class TestCase extends Orchestra
         $schema = $app['db']->connection()->getSchemaBuilder();
 
         $this->createAuthors($schema);
+        $this->createBooks($schema);
     }
 
     protected function createAuthors(Builder $schema)
@@ -69,5 +71,20 @@ abstract class TestCase extends Orchestra
         });
 
         Author::create(['name' => 'William Shakespeare']);
+        Author::create(['name' => 'J. K. Rowling']);
+    }
+
+    protected function createBooks(Builder $schema)
+    {
+        $schema->create('books', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name', 100);
+            $table->integer('author_id');
+            $table->timestamps();
+        });
+
+        Book::create(['name' => 'Hamlet', 'author_id' => 1]);
+        Book::create(['name' => 'Romeo and Juliet', 'author_id' => 1]);
+        Book::create(['name' => 'Harry Potter', 'author_id' => 2]);
     }
 }

@@ -130,9 +130,11 @@ trait QueryAssertion
             return $expectedBindings;
         }
 
-        return is_array($expectedBindings[0])
-            ? $expectedBindings
-            : [$expectedBindings];
+        if (isset($expectedBindings[0]) && is_array($expectedBindings[0])) {
+            return $expectedBindings;
+        }
+
+        return [$expectedBindings];
     }
 
     /**

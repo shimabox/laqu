@@ -13,4 +13,9 @@ class Author extends EloquentModel
     public $timestamps = true;
 
     protected $table = 'authors';
+
+    public function books()
+    {
+        return $this->hasMany(Book::class);
+    }
 }
