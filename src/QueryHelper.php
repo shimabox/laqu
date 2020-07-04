@@ -5,21 +5,10 @@ declare(strict_types=1);
 namespace Laqu;
 
 use Carbon\Carbon;
-use Laqu\Contracts\SqlFormatter as SqlFormatterContract;
 use Laqu\Facades\QueryLog;
 
 class QueryHelper
 {
-    /**
-     * @var SqlFormatterContract
-     */
-    private $formatter;
-
-    public function __construct(SqlFormatterContract $formatter)
-    {
-        $this->formatter = $formatter;
-    }
-
     /**
      * Get the SQL representation of the query after it has been build.
      *
@@ -32,40 +21,6 @@ class QueryHelper
         return array_map(function ($query) {
             return $this->build($query['query'], $query['bindings']);
         }, $queryLog);
-    }
-
-    /**
-     * Format the whitespace in a SQL string to make it easier to read.
-     *
-     * @param  string $string       The SQL string
-     * @param  string $indentString
-     * @return string The SQL string with HTML styles and formatting wrapped in a <pre> tag
-     */
-    public function format(string $string, string $indentString = '  '): string
-    {
-        return $this->formatter->format($string, $indentString);
-    }
-
-    /**
-     * Add syntax highlighting to a SQL string
-     *
-     * @param  string $string The SQL string
-     * @return string The SQL string with HTML styles applied
-     */
-    public function highlight(string $string): string
-    {
-        return $this->formatter->highlight($string);
-    }
-
-    /**
-     * Compress a query by collapsing white space and removing comments
-     *
-     * @param  string $string The SQL string
-     * @return string The SQL string without comments
-     */
-    public function compress(string $string): string
-    {
-        return $this->formatter->compress($string);
     }
 
     /**

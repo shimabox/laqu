@@ -7,7 +7,7 @@ namespace Laqu\Contracts;
 /**
  * @see https://github.com/doctrine/sql-formatter
  */
-interface SqlFormatter
+interface QueryFormatter
 {
     /**
      * Format the whitespace in a SQL string to make it easier to read.
