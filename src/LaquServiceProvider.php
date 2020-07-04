@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Laqu;
 
+use Doctrine\SqlFormatter\NullHighlighter;
 use Illuminate\Support\ServiceProvider;
-use Laqu\Contracts\SqlFormatter as SqlFormatterContract;
-use Laqu\SqlFormatter\SqlFormatter;
+use Laqu\Formatter\QueryFormatter;
 
 class LaquServiceProvider extends ServiceProvider
 {
@@ -19,15 +19,12 @@ class LaquServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->bind(SqlFormatterContract::class, function ($app, $param) {
-            return new SqlFormatter($param[0] ?? null);
+        $this->app->singleton('queryFormatter', function ($app, $param) {
+            return new QueryFormatter($param[0] ?? new NullHighlighter());
         });
 
         $this->app->singleton('queryHelper', function ($app) {
-            return $app->make(
-                QueryHelper::class,
-                [SqlFormatterContract::class]
-            );
+            return $app->make(QueryHelper::class);
         });
     }
 }

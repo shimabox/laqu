@@ -6,6 +6,7 @@ namespace Laqu\Test;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Laqu\Facades\QueryFormatter;
 use Laqu\Facades\QueryHelper;
 use Laqu\Test\Models\Author;
 
@@ -53,7 +54,7 @@ class QueryHelperTest extends TestCase
             Author::where('id', '=', 1)->get();
         });
 
-        $actual   = QueryHelper::compress($buildedQuery[0]);
+        $actual   = QueryFormatter::compress($buildedQuery[0]);
         $expected = 'select * from authors where id = 1';
 
         $this->assertSame($expected, $this->removeQuotationMark($actual));
@@ -69,7 +70,7 @@ class QueryHelperTest extends TestCase
             DB::select($query, [1]);
         });
 
-        $actual   = QueryHelper::compress($buildedQuery[0]);
+        $actual   = QueryFormatter::compress($buildedQuery[0]);
         $expected = 'select * from authors where id = 1';
 
         $this->assertSame($expected, $this->removeQuotationMark($actual));
@@ -87,7 +88,7 @@ class QueryHelperTest extends TestCase
             )->get();
         });
 
-        $actual   = QueryHelper::compress($buildedQuery[0]);
+        $actual   = QueryFormatter::compress($buildedQuery[0]);
         $expected = 'select * from authors where name like \'%Shakespeare\'';
 
         $this->assertSame($expected, $this->removeQuotationMark($actual));
@@ -103,7 +104,7 @@ class QueryHelperTest extends TestCase
             DB::select($query, ['name' => '%Shakespeare']);
         });
 
-        $actual   = QueryHelper::compress($buildedQuery[0]);
+        $actual   = QueryFormatter::compress($buildedQuery[0]);
         $expected = 'select * from authors where name like \'%Shakespeare\'';
 
         $this->assertSame($expected, $this->removeQuotationMark($actual));
@@ -125,7 +126,7 @@ class QueryHelperTest extends TestCase
                 ->get();
         });
 
-        $actual   = QueryHelper::compress($buildedQuery[0]);
+        $actual   = QueryFormatter::compress($buildedQuery[0]);
         $expected = 'select * from authors where id in (1, 2) and name like \'%Shakespeare\' and updated_at between \'' . $from . '\' and \'' . $to . '\'';
 
         $this->assertSame($expected, $this->removeQuotationMark($actual));

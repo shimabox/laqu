@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Laqu\SqlFormatter;
+namespace Laqu\Formatter;
 
 use Doctrine\SqlFormatter\Highlighter as DoctrineHighlighter;
 use Doctrine\SqlFormatter\SqlFormatter as DoctrineSqlFormatter;
-use Laqu\Contracts\SqlFormatter as SqlFormatterContract;
+use Laqu\Contracts\QueryFormatter as QueryFormatterContract;
 
 /**
  * @see https://github.com/doctrine/sql-formatter
  */
-class SqlFormatter implements SqlFormatterContract
+class QueryFormatter implements QueryFormatterContract
 {
     private $sqlFormatter;
 

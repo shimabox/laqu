@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laqu;
 
-use Laqu\Facades\QueryHelper;
+use Laqu\Facades\QueryFormatter;
 use Laqu\Facades\QueryLog;
 
 /**
@@ -101,8 +101,8 @@ trait QueryAssertion
         $expectedBindings = $this->increaseDimensionsIfSingleDimension($expectedBindings);
 
         foreach ($queryLog as $index => $log) {
-            $expectedQuery = QueryHelper::compress($expectedQueries[$index] ?? '');
-            $actualQuery   = QueryHelper::compress($log['query']);
+            $expectedQuery = QueryFormatter::compress($expectedQueries[$index] ?? '');
+            $actualQuery   = QueryFormatter::compress($log['query']);
 
             $this->assertSame(
                 $this->removeQuotationMark($expectedQuery),
