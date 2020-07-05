@@ -2,25 +2,30 @@
 
 declare(strict_types=1);
 
-namespace Laqu;
+namespace Laqu\Analyzer;
 
 use Carbon\Carbon;
 use Laqu\Facades\QueryLog;
 
-class QueryHelper
+class QueryAnalyzer
 {
     /**
-     * Get the SQL representation of the query after it has been build.
-     *
-     * @param  callable $queryCaller Process to execute the query.
-     * @return array
+     * @param  callable  $queryCaller Process to execute the query.
+     * @return QueryList
      */
-    public function buildedQuery($queryCaller): array
+    public function analyze($queryCaller): QueryList
     {
-        $queryLog = QueryLog::getQueryLog($queryCaller);
-        return array_map(function ($query) {
-            return $this->build($query['query'], $query['bindings']);
+        $queryLog  = QueryLog::getQueryLog($queryCaller);
+        $queryList = array_map(function ($query) {
+            return new Query(
+                $query['query'],
+                $query['bindings'],
+                $query['time'],
+                $this->build($query['query'], $query['bindings'])
+            );
         }, $queryLog);
+
+        return new QueryList($queryList);
     }
 
     /**
