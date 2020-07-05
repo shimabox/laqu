@@ -9,6 +9,7 @@ use Illuminate\Support\ServiceProvider;
 use Laqu\Analyzer\QueryAnalyzer;
 use Laqu\Formatter\QueryFormatter;
 use Laqu\Helper\QueryHelper;
+use Laqu\Helper\QueryLog;
 
 class LaquServiceProvider extends ServiceProvider
 {
