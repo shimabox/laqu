@@ -220,6 +220,36 @@ SQL;
     /**
      * @test
      */
+    public function it_can_leave_quotation_marks_and_assert()
+    {
+        $this->leaveQuotationMarkApplied = true;
+
+        $expectedQuery = <<<SQL
+    select
+        *
+    from
+        authors
+    where
+        name like '%''"%'
+SQL;
+
+        $expectedBindings = [];
+
+        $this->assertQuery(
+            function () {
+                $query = "select * from authors where name like '%''\"%'";
+                DB::select($query);
+            },
+            $expectedQuery,
+            $expectedBindings
+        );
+
+        $this->leaveQuotationMarkApplied = false;
+    }
+
+    /**
+     * @test
+     */
     public function it_can_assert_for_hasMany()
     {
         $expectedQuery_1 = 'select * from authors';
