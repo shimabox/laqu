@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Laqu\Test;
+namespace Laqu\Test\Formatter;
 
 use Doctrine\SqlFormatter\CliHighlighter;
 use Doctrine\SqlFormatter\HtmlHighlighter;
 use Laqu\Facades\QueryFormatter;
+use Laqu\Test\TestCase;
 
 class QueryFormatterTest extends TestCase
 {
