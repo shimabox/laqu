@@ -6,6 +6,7 @@ namespace Laqu;
 
 use Doctrine\SqlFormatter\NullHighlighter;
 use Illuminate\Support\ServiceProvider;
+use Laqu\Analyzer\QueryAnalyzer;
 use Laqu\Formatter\QueryFormatter;
 
 class LaquServiceProvider extends ServiceProvider
@@ -21,6 +22,10 @@ class LaquServiceProvider extends ServiceProvider
     {
         $this->app->singleton('queryFormatter', function ($app, $param) {
             return new QueryFormatter($param[0] ?? new NullHighlighter());
+        });
+
+        $this->app->singleton('queryAnalyzer', function ($app) {
+            return $app->make(QueryAnalyzer::class);
         });
 
         $this->app->singleton('queryHelper', function ($app) {
