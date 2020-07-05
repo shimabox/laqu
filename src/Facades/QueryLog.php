@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @method static array getQueryLog(callable $queryCaller)
  *
- * @see \Laqu\QueryLog
+ * @see \Laqu\Helper\QueryLog
  */
 class QueryLog extends Facade
 {

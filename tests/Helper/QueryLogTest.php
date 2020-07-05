@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Laqu\Test;
+namespace Laqu\Test\Helper;
 
 use Laqu\Facades\QueryLog;
 use Laqu\Test\Models\Author;
+use Laqu\Test\TestCase;
 
 class QueryLogTest extends TestCase
 {
