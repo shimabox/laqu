@@ -78,9 +78,9 @@ class QueryHelper
      *     Author::whereRaw('name like :name', ['name' => '%Shakespeare'])->get();
      * });
      *
-     * In the above case, parameter will be [0 => "% Shakespeare"] and query of
+     * In the above case, parameter will be [0 => "%Shakespeare"] and query of
      * "select * from authors where like like: name" cannot be assembled.
-     * Therefore, parameter is adjusted so that ['name' => "% Shakespeare"].
+     * Therefore, parameter is adjusted so that ['name' => "%Shakespeare"].
      *
      * @param  string $rawSql
      * @param  array  $parameters
