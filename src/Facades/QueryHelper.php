@@ -7,9 +7,9 @@ namespace Laqu\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static array buildedQuery(callable $queryCaller)
+ * @method static string buildedQuery(string $rawSql, array $parameters = [])
  *
- * @see \Laqu\QueryHelper
+ * @see \Laqu\Helper\QueryHelper
  */
 class QueryHelper extends Facade
 {
