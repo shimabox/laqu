@@ -27,9 +27,5 @@ class LaquServiceProvider extends ServiceProvider
         $this->app->singleton('queryAnalyzer', function ($app) {
             return $app->make(QueryAnalyzer::class);
         });
-
-        $this->app->singleton('queryHelper', function ($app) {
-            return $app->make(QueryHelper::class);
-        });
     }
 }
