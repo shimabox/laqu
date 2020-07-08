@@ -3,6 +3,10 @@
 Laqu is **La**ravel Db **Qu**ery Helper.
 
 ![Run Tests](https://github.com/shimabox/laqu/workflows/Run%20Tests/badge.svg?branch=master)
+[![License](https://poser.pugx.org/shimabox/laqu/license)](//packagist.org/packages/shimabox/laqu)
+[![Latest Stable Version](https://poser.pugx.org/shimabox/laqu/v)](//packagist.org/packages/shimabox/laqu)
+[![Maintainability](https://api.codeclimate.com/v1/badges/85b239b6865150a8acc3/maintainability)](https://codeclimate.com/github/shimabox/laqu/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/85b239b6865150a8acc3/test_coverage)](https://codeclimate.com/github/shimabox/laqu/test_coverage)
 
 ## Features
 
