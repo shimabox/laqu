@@ -7,60 +7,6 @@ namespace Laqu;
 use Laqu\Facades\QueryFormatter;
 use Laqu\Facades\QueryLog;
 
-/**
- * Query assertion.
- *
- * <code>
- * use QueryAssertion;
- *
- * // Basic usage.
- * $this->assertQuery(
- *     // Pass the process in which the query will be executed in the closure.
- *     function () {
- *         $this->UserRepository->findById('a123');
- *     },
- *     // Write the expected query.
- *     'select * from user where id = ? and is_active = ?',
- *     // Define the expected bind values as an array.
- *     // (If there is nothing to bind, pass an empty array or do not pass the argument)
- *     [
- *         'a123',
- *         1,
- *     ]
- * );
- *
- * // Assert multiple queries.
- * // Basically, it's a good idea to look at one query in one method,
- * // but there are cases where one method executes multiple queries.
- * // In that case, define the query and bind value as an array pair as shown below.
- * $this->assertQuery(
- *     function () {
- *         // For example, if multiple queries are executed in this process
- *         $this->UserRepository->findAll();
- *     },
- *     // Define an array for each expected query.
- *     [
- *         'select * from user where is_active = ?', // ※1
- *         'select * from admin_user where id = ? and is_active = ?', // ※2
- *         'select * from something', // ※3
- *     ],
- *     // Define the bind values ​​as a two-dimensional array (pass empty array if there is nothing to bind).
- *     [
- *         [ // ※1.
- *             1,
- *         ],
- *         [ // ※2.
- *             'b123',
- *             1,
- *         ],
- *         // ※3 is no bind.
- *         []
- *     ]
- * );
- * </code>
- *
- * @see https://github.com/doctrine/sql-formatter
- */
 trait QueryAssertion
 {
     /**
