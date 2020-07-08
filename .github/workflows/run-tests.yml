@@ -55,3 +55,30 @@ jobs:
 
     - name: Run test suite
       run: composer test
+
+  coverage:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "7.4"
+          coverage: pcov
+
+      - name: Install dependencies
+        run: |
+          composer require "laravel/framework:7.*" "orchestra/testbench:5.*" "symfony/console:>=4.3.4" --no-interaction --no-update
+          composer update --prefer-stable --prefer-dist --no-interaction --no-progress --no-suggest
+
+      - name: Publish code coverage
+        uses: paambaati/codeclimate-action@v2.6.0
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        with:
+          coverageCommand: composer test -- --coverage-clover=clover.xml
+          debug: true
