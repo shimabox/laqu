@@ -42,6 +42,8 @@ Available within PHPUnit.
 ```php
 <?php
 
+use Laqu\QueryAssertion;
+
 class QueryAssertionTest extends TestCase
 {
     use QueryAssertion;
@@ -109,6 +111,8 @@ class QueryAssertionTest extends TestCase
 
 ```php
 <?php
+
+use Laqu\Facades\QueryAnalyzer;
 
 /** @var Laqu\Analyzer\QueryList **/
 $analyzed = QueryAnalyzer::analyze(function () {
@@ -223,6 +227,8 @@ QueryLog is a wrap on [Basic Database Usage - Laravel - The PHP Framework For We
 ```php
 <?php
 
+use Laqu\Facades\QueryLog;
+
 $queryLog = QueryLog::getQueryLog(function () {
     Author::find(1);
 });
@@ -245,6 +251,9 @@ dump($queryLog);
 
 ```php
 <?php
+
+use Laqu\Facades\QueryHelper;
+
 $now  = Carbon::now();
 $from = $now->copy()->subDay();
 $to   = $now->copy()->addDay();
@@ -265,6 +274,118 @@ $buildedQuery = QueryHelper::buildedQuery($query, $bindings);
 echo $buildedQuery;
 ```
 
+### QueryFormatter
+
+QueryFormatter is a wrapper for `Doctrine\SqlFormatter\SqlFormatter`.  
+@see [doctrine/sql-formatter: A lightweight php class for formatting sql statements. Handles automatic indentation and syntax highlighting.](https://github.com/doctrine/sql-formatter "doctrine/sql-formatter: A lightweight php class for formatting sql statements. Handles automatic indentation and syntax highlighting.")
+
+#### format()
+
+The default Highlighter is `Doctrine\SqlFormatter\NullHighlighter`.
+
+```php
+<?php
+
+use Laqu\Facades\QueryFormatter;
+
+$query = "SELECT count(*),`Column1`,`Testing`, `Testing Three` FROM `Table1`
+    WHERE Column1 = 'testing' AND ( (`Column2` = `Column3` OR Column4 >= NOW()) )
+    GROUP BY Column1 ORDER BY Column3 DESC LIMIT 5,10";
+
+/*
+SELECT
+  count(*),
+  `Column1`,
+  `Testing`,
+  `Testing Three`
+FROM
+  `Table1`
+WHERE
+  Column1 = 'testing'
+  AND (
+    (
+      `Column2` = `Column3`
+      OR Column4 >= NOW()
+    )
+  )
+GROUP BY
+  Column1
+ORDER BY
+  Column3 DESC
+LIMIT
+  5, 10
+*/
+echo QueryFormatter::format($query);
+```
+
+When using `Doctrine\SqlFormatter\CliHighlighter`.
+
+```php
+<?php
+
+use Doctrine\SqlFormatter\CliHighlighter;
+use Laqu\Formatter\QueryFormatter;
+
+/** @var QueryFormatter */
+$formatter = app()->make(QueryFormatter::class/* or 'queryFormatter' */, [new CliHighlighter()]);
+
+echo $formatter->format($query);
+```
+Output is  
+![example_CliHighlighter](https://github.com/shimabox/assets/raw/master/laqu/example_CliHighlighter.png)
+
+When using `Doctrine\SqlFormatter\HtmlHighlighter`.
+
+```php
+<?php
+
+use Doctrine\SqlFormatter\HtmlHighlighter;
+use Laqu\Formatter\QueryFormatter;
+
+/** @var QueryFormatter */
+$formatter = app()->make(QueryFormatter::class/* or 'queryFormatter' */, [new HtmlHighlighter()]);
+
+echo $formatter->format($query);
+```
+Output is  
+![example_HtmlHighlighter](https://github.com/shimabox/assets/raw/master/laqu/example_HtmlHighlighter.png)
+
+#### highlight()
+
+The usage is almost the same as the `format()`.  
+Please refer to https://github.com/doctrine/sql-formatter#syntax-highlighting-only.
+
+```php
+<?php
+
+use Laqu\Facades\QueryFormatter;
+
+$query = '...';
+
+echo QueryFormatter::highlight($query);
+```
+
+#### compress()
+
+Please refer to https://github.com/doctrine/sql-formatter#compress-query.
+
+```php
+<?php
+
+use Laqu\Facades\QueryFormatter;
+
+$query = <<<SQL
+-- This is a comment
+SELECT
+    /* This is another comment
+    On more than one line */
+    Id #This is one final comment
+    as temp, DateCreated as Created FROM MyTable;
+SQL;
+
+// SELECT Id as temp, DateCreated as Created FROM MyTable;
+echo QueryFormatter::compress($query);
+```
 
 ## Run php-cs-fixer.
 
