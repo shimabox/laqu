@@ -31,6 +31,8 @@ $ composer require --dev shimabox/laqu
 Develop.
 ```
 $ git clone https://github.com/shimabox/laqu.git
+$ cd laqu
+$ composer install
 ```
 
 ## Usage
@@ -387,7 +389,9 @@ SQL;
 echo QueryFormatter::compress($query);
 ```
 
-## Run php-cs-fixer.
+## Develop
+
+### Run php-cs-fixer.
 
 check.
 ```
@@ -399,7 +403,7 @@ fix.
 $ composer phpcs:fix
 ```
 
-## Run test.
+### Run test.
 
 ```
 $ composer test
