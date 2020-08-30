@@ -16,6 +16,10 @@ Laqu is **La**ravel Db **Qu**ery Helper.
 #### Attention
 This library is intended to be used during development.
 
+## See Also
+
+[【Laravel】実行されたDBクエリの確認ができるやつを書いた - Qiita](https://qiita.com/shimabox/items/11b5d3e3c02e7413fc9e "【Laravel】実行されたDBクエリの確認ができるやつを書いた - Qiita")
+
 ## Requirement
 
 - PHP 7.2+ or newer
