@@ -6,6 +6,7 @@ namespace Laqu\Test\Analyzer;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Laqu\Analyzer\Query;
 use Laqu\Facades\QueryAnalyzer;
 use Laqu\Facades\QueryFormatter;
 use Laqu\Test\Models\Author;
@@ -13,6 +14,26 @@ use Laqu\Test\TestCase;
 
 class QueryAnalyzerTest extends TestCase
 {
+    /**
+     * @test
+     */
+    public function it_can_return_a_query_instance()
+    {
+        $analyzed = QueryAnalyzer::analyze(function () {
+            Author::where('id', '=', 1)->get();
+        });
+
+        $this->assertCount(1, $analyzed);
+
+        /** @var Query */
+        $actual = $analyzed[0];
+
+        $this->assertSame('select * from authors where id = ?', $this->removeQuotationMark($actual->getQuery()));
+        $this->assertSame([1], $actual->getBindings());
+        $this->assertTrue($actual->getTime() > 0);
+        $this->assertSame('select * from authors where id = 1', $this->removeQuotationMark($actual->getBuildedQuery()));
+    }
+
     /**
      * @test
      */
