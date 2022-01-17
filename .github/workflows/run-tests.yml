@@ -67,12 +67,12 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "7.4"
+          php-version: "8.0"
           coverage: pcov
 
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:7.*" "orchestra/testbench:5.*" "symfony/console:>=4.3.4" --no-interaction --no-update
+          composer require "laravel/framework:8.*" "orchestra/testbench:6.*" "symfony/console:>=4.3.4" --no-interaction --no-update
           composer update --prefer-stable --prefer-dist --no-interaction --no-progress --no-suggest
 
       - name: Publish code coverage
