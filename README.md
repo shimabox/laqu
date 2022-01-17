@@ -22,8 +22,8 @@ This library is intended to be used during development.
 
 ## Requirement
 
-- PHP 7.2+ or newer
-- Laravel `5.8.x`, `6.x`, `7.x`
+- PHP 7.3+ or newer
+- Laravel `6.x`, `7.x`, `8.x`
 
 ## Installation
 
