@@ -22,7 +22,7 @@ This library is intended to be used during development.
 
 ## Requirement
 
-- PHP 7.3+ or newer
+- PHP 7.3+ or newer(7.3, 7.4, 8.0)
 - Laravel `6.x`, `7.x`, `8.x`
 
 ## Installation
@@ -407,10 +407,25 @@ fix.
 $ composer phpcs:fix
 ```
 
+### Run phpstan(larastan).
+
+check.
+```
+$ composer phpstan
+```
+
 ### Run test.
 
 ```
 $ composer test
+```
+
+### Run ci.
+
+Run all the above commands at once.
+
+```
+$ composer ci
 ```
 
 ## TODO
