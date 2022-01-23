@@ -46,6 +46,11 @@
         "phpcs": "php-cs-fixer fix --dry-run --diff --diff-format udiff --config=.php_cs.dist",
         "phpcs:fix": "php-cs-fixer fix --diff --diff-format udiff --config=.php_cs.dist --verbose",
         "phpstan": "phpstan analyse --memory-limit=2G",
-        "test": "phpunit"
+        "test": "phpunit",
+        "ci": [
+            "@phpcs",
+            "@phpstan",
+            "@test"
+        ]
     }
 }
