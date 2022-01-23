@@ -47,23 +47,27 @@ class QueryList implements ArrayAccess, IteratorAggregate, Countable
 
     public function sortByFast(): array
     {
-        $queries = $this->queries;
-        array_multisort($this->executionTimes(), SORT_ASC, $queries);
+        $queries        = $this->queries;
+        $executionTimes = $this->executionTimes();
+        array_multisort($executionTimes, SORT_ASC, $queries);
         return $queries;
     }
 
     public function sortBySlow(): array
     {
-        $queries = $this->queries;
-        array_multisort($this->executionTimes(), SORT_DESC, $queries);
+        $queries        = $this->queries;
+        $executionTimes = $this->executionTimes();
+        array_multisort($executionTimes, SORT_DESC, $queries);
         return $queries;
     }
 
     private function executionTimes(): array
     {
-        return array_map(function (Query $query, $key) {
-            return [$key] = $query->getTime();
+        // Fixed cannot use array destructuring on float.
+        $times = array_map(function (Query $query, int $key) {
+            return [$key => $query->getTime()];
         }, $this->queries, array_keys($this->queries));
+        return collect($times)->flatten()->toArray();
     }
 
     public function offsetSet($offset, $value): void

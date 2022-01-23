@@ -1,0 +1,8 @@
+# vim: set ft=yaml:
+
+includes:
+  - vendor/nunomaduro/larastan/extension.neon
+parameters:
+  level: 5
+  paths:
+    - src
