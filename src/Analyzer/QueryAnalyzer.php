@@ -13,7 +13,7 @@ class QueryAnalyzer
      * @param  callable  $queryCaller Process to execute the query.
      * @return QueryList
      */
-    public function analyze($queryCaller): QueryList
+    public function analyze(callable $queryCaller): QueryList
     {
         $queryLog  = QueryLog::getQueryLog($queryCaller);
         $queryList = array_map(function ($query) {
