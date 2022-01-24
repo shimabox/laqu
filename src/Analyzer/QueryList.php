@@ -63,11 +63,11 @@ class QueryList implements ArrayAccess, IteratorAggregate, Countable
 
     private function executionTimes(): array
     {
-        // Fixed cannot use array destructuring on float.
-        $times = array_map(function (Query $query, int $key) {
-            return [$key => $query->getTime()];
+        $times = [];
+        array_map(function (Query $query, int $key) use (&$times) {
+            $times = array_merge($times, [$key => $query->getTime()]);
         }, $this->queries, array_keys($this->queries));
-        return collect($times)->flatten()->toArray();
+        return $times;
     }
 
     public function offsetSet($offset, $value): void
