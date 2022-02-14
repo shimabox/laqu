@@ -17,7 +17,7 @@ class QueryHelper
      *
      * @see https://github.com/panique/pdo-debug/blob/master/pdo-debug.php
      */
-    public function buildedQuery(string $rawSql, array $parameters = [])
+    public function buildedQuery(string $rawSql, array $parameters = []): string
     {
         $keys   = [];
         $values = [];
@@ -64,9 +64,9 @@ class QueryHelper
         }
 
         if ($isNamedMarkers) {
-            return preg_replace($keys, $values, $rawSql);
+            return (string) preg_replace($keys, $values, $rawSql);
         } else {
-            return preg_replace($keys, $values, $rawSql, 1, $count);
+            return (string) preg_replace($keys, $values, $rawSql, 1, $count);
         }
     }
 
