@@ -8,6 +8,9 @@ use Illuminate\Database\Connection;
 
 class QueryLog
 {
+    /**
+     * @var Connection
+     */
     private $connection;
 
     public function __construct(Connection $connection)
@@ -18,8 +21,9 @@ class QueryLog
     /**
      * Get the connection query log.
      *
-     * @param  callable $queryCaller
-     * @return array
+     * @param callable $queryCaller
+     *
+     * @return array<int, array{"query": string, "bindings": array<int, mixed>, "time": float}>
      */
     public function getQueryLog(callable $queryCaller): array
     {
