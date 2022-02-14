@@ -11,8 +11,8 @@ class QueryHelper
     /**
      * Returns the emulated SQL string
      *
-     * @param  string $rawSql
-     * @param  array  $parameters
+     * @param  string       $rawSql
+     * @param  array<mixed> $parameters
      * @return string
      *
      * @see https://github.com/panique/pdo-debug/blob/master/pdo-debug.php
@@ -82,9 +82,9 @@ class QueryHelper
      * "select * from authors where like like: name" cannot be assembled.
      * Therefore, parameter is adjusted so that ['name' => "%Shakespeare"].
      *
-     * @param  string $rawSql
-     * @param  array  $parameters
-     * @return array
+     * @param  string       $rawSql
+     * @param  array<mixed> $parameters
+     * @return array<mixed>
      */
     private function adjustParameters(string $rawSql, array $parameters): array
     {
