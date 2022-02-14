@@ -11,13 +11,13 @@ class QueryHelper
     /**
      * Returns the emulated SQL string
      *
-     * @param  string $rawSql
-     * @param  array  $parameters
+     * @param  string       $rawSql
+     * @param  array<mixed> $parameters
      * @return string
      *
      * @see https://github.com/panique/pdo-debug/blob/master/pdo-debug.php
      */
-    public function buildedQuery(string $rawSql, array $parameters = [])
+    public function buildedQuery(string $rawSql, array $parameters = []): string
     {
         $keys   = [];
         $values = [];
@@ -64,9 +64,9 @@ class QueryHelper
         }
 
         if ($isNamedMarkers) {
-            return preg_replace($keys, $values, $rawSql);
+            return (string) preg_replace($keys, $values, $rawSql);
         } else {
-            return preg_replace($keys, $values, $rawSql, 1, $count);
+            return (string) preg_replace($keys, $values, $rawSql, 1, $count);
         }
     }
 
@@ -82,15 +82,15 @@ class QueryHelper
      * "select * from authors where like like: name" cannot be assembled.
      * Therefore, parameter is adjusted so that ['name' => "%Shakespeare"].
      *
-     * @param  string $rawSql
-     * @param  array  $parameters
-     * @return array
+     * @param  string       $rawSql
+     * @param  array<mixed> $parameters
+     * @return array<mixed>
      */
     private function adjustParameters(string $rawSql, array $parameters): array
     {
         $returnParameters = $parameters;
         $index            = 0;
-        preg_replace_callback('/\?|:(\w+)/', function ($matches) use (&$returnParameters, &$index) {
+        preg_replace_callback('/\?|:(\w+)/', function ($matches) use (&$returnParameters, &$index): string {
             if (
                 $matches[0] !== '?'
                 && ! isset($returnParameters[$matches[0]])
@@ -101,6 +101,7 @@ class QueryHelper
                 unset($returnParameters[$index]);
             }
             ++$index;
+            return '';
         }, $rawSql);
 
         return $returnParameters;

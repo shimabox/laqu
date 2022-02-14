@@ -10,8 +10,8 @@ use Laqu\Facades\QueryLog;
 class QueryAnalyzer
 {
     /**
-     * @param  callable  $queryCaller Process to execute the query.
-     * @return QueryList
+     * @param  callable       $queryCaller Process to execute the query.
+     * @return QueryList<int, Query>
      */
     public function analyze(callable $queryCaller): QueryList
     {

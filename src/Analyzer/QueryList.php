@@ -25,6 +25,11 @@ class QueryList implements ArrayAccess, IteratorAggregate, Countable
         $this->queries = $queries;
     }
 
+    /**
+     * @param QueryList<int, Query> $queryList
+     *
+     * @return QueryList<int, Query>
+     */
     public function addQueryList(QueryList $queryList): self
     {
         foreach ($queryList as $list) {
@@ -45,6 +50,9 @@ class QueryList implements ArrayAccess, IteratorAggregate, Countable
         return $sortedQueries[0];
     }
 
+    /**
+     * @return array<int, Query>
+     */
     public function sortByFast(): array
     {
         $queries        = $this->queries;
@@ -53,6 +61,9 @@ class QueryList implements ArrayAccess, IteratorAggregate, Countable
         return $queries;
     }
 
+    /**
+     * @return array<int, Query>
+     */
     public function sortBySlow(): array
     {
         $queries        = $this->queries;
@@ -61,6 +72,9 @@ class QueryList implements ArrayAccess, IteratorAggregate, Countable
         return $queries;
     }
 
+    /**
+     * @return array<int, float>
+     */
     private function executionTimes(): array
     {
         $times = [];
@@ -70,6 +84,11 @@ class QueryList implements ArrayAccess, IteratorAggregate, Countable
         return $times;
     }
 
+    /**
+     * @param  ?int  $offset
+     * @param  Query $value
+     * @return void
+     */
     public function offsetSet($offset, $value): void
     {
         if (! $value instanceof Query) {
@@ -84,22 +103,37 @@ class QueryList implements ArrayAccess, IteratorAggregate, Countable
         $this->queries[$offset] = $value;
     }
 
+    /**
+     * @param  int  $offset
+     * @return bool
+     */
     public function offsetExists($offset): bool
     {
         return isset($this->queries[$offset]);
     }
 
+    /**
+     * @param  int  $offset
+     * @return void
+     */
     public function offsetUnset($offset): void
     {
         unset($this->queries[$offset]);
     }
 
+    /**
+     * @param  int    $offset
+     * @return ?Query
+     */
     public function offsetGet($offset): ?Query
     {
         return $this->queries[$offset] ?? null;
     }
 
-    public function getIterator()
+    /**
+     * @return ArrayIterator<int, Query>
+     */
+    public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->queries);
     }

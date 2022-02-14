@@ -13,6 +13,9 @@ use Laqu\Helper\QueryLog;
 
 class LaquServiceProvider extends ServiceProvider
 {
+    /**
+     * @return void
+     */
     public function boot()
     {
         $this->app->singleton('queryLog', function ($app) {
@@ -20,6 +23,9 @@ class LaquServiceProvider extends ServiceProvider
         });
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function register()
     {
         $this->app->singleton('queryFormatter', function ($app, $param) {
