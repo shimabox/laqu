@@ -90,7 +90,7 @@ class QueryHelper
     {
         $returnParameters = $parameters;
         $index            = 0;
-        preg_replace_callback('/\?|:(\w+)/', function ($matches) use (&$returnParameters, &$index) {
+        preg_replace_callback('/\?|:(\w+)/', function ($matches) use (&$returnParameters, &$index): string {
             if (
                 $matches[0] !== '?'
                 && ! isset($returnParameters[$matches[0]])
@@ -101,6 +101,7 @@ class QueryHelper
                 unset($returnParameters[$index]);
             }
             ++$index;
+            return '';
         }, $rawSql);
 
         return $returnParameters;
