@@ -13,6 +13,9 @@ use Laqu\Contracts\QueryFormatter as QueryFormatterContract;
  */
 class QueryFormatter implements QueryFormatterContract
 {
+    /**
+     * @var DoctrineSqlFormatter
+     */
     private $sqlFormatter;
 
     public function __construct(?DoctrineHighlighter $highlighter = null)
