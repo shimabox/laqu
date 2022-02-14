@@ -9,7 +9,7 @@ class Query
     /** @var string */
     private $query;
 
-    /** @var array */
+    /** @var array<int, int> */
     private $bindings;
 
     /** @var float */
@@ -18,6 +18,12 @@ class Query
     /** @var string */
     private $buildedQuery;
 
+    /**
+     * @param string          $query
+     * @param array<int, int> $bindings
+     * @param float           $time
+     * @param string          $buildedQuery
+     */
     public function __construct(
         string $query,
         array $bindings,
@@ -35,6 +41,9 @@ class Query
         return $this->query;
     }
 
+    /**
+     * @return array<int, int>
+     */
     public function getBindings(): array
     {
         return $this->bindings;
