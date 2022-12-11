@@ -134,10 +134,8 @@ return $config
         'no_spaces_around_offset' => true,
         // There MUST NOT be a space after the opening parenthesis. There MUST NOT be a space before the closing parenthesis.
         'no_spaces_inside_parenthesis' => true,
-        // Remove trailing commas in list function calls.
-        'no_trailing_comma_in_list_call' => true,
-        // PHP single-line arrays should not have trailing comma.
-        'no_trailing_comma_in_singleline_array' => true,
+        // If a list of values separated by a comma is contained on a single line, then the last item MUST NOT have a trailing comma.
+        'no_trailing_comma_in_singleline' => true,
         // Remove trailing whitespace at the end of non-blank lines.
         'no_trailing_whitespace' => true,
         // There MUST be no trailing spaces inside comment or PHPDoc.
