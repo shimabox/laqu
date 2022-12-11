@@ -96,7 +96,7 @@ class QueryHelper
                 && ! isset($returnParameters[$matches[0]])
                 && ! isset($returnParameters[$matches[1]])
             ) {
-                $value = $returnParameters[$index];
+                $value                         = $returnParameters[$index];
                 $returnParameters[$matches[1]] = $value;
                 unset($returnParameters[$index]);
             }
