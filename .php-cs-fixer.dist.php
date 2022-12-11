@@ -6,7 +6,8 @@ $finder = PhpCsFixer\Finder::create()
     ->in('src')
     ->in('tests');
 
-return PhpCsFixer\Config::create()
+$config = new PhpCsFixer\Config();
+return $config
     ->setRiskyAllowed(true)
     ->setRules([
         // Each line of multi-line DocComments must have an asterisk [PSR-5] and must be aligned with the first one.
