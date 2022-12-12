@@ -61,7 +61,7 @@ SQL;
 
         $this->assertQuery(
             function () {
-                $query  = 'select * from authors where name like :name';
+                $query = 'select * from authors where name like :name';
                 $author = DB::select($query, ['name' => '%Shakespeare']);
                 Author::destroy($author[0]->id);
             },
