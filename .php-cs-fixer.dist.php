@@ -30,8 +30,6 @@ return $config
         'class_attributes_separation' => true,
         // Whitespace around the keywords of a class, trait or interfaces definition should be one space.
         'class_definition' => true,
-        // When referencing an internal class it must be written using the correct casing.
-        'class_reference_name_casing' => true,
         // Remove extra spaces in a nullable typehint.
         'compact_nullable_typehint' => true,
         // Concatenation should be spaced according configuration.
@@ -246,6 +244,8 @@ return $config
         'yoda_style' => ['equal' => false, 'identical' => false, 'less_and_greater' => false],
         // Comment must be surrounded by spaces.
         PhpCsFixerCustomFixers\Fixer\CommentSurroundedBySpacesFixer::name() => true,
+        // Class defined internally by an extension, or the core should be called using the correct casing.
+        PhpCsFixerCustomFixers\Fixer\InternalClassCasingFixer::name() => true,
     ])
     ->registerCustomFixers(
         new PhpCsFixerCustomFixers\Fixers()
