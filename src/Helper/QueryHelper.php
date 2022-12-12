@@ -74,9 +74,9 @@ class QueryHelper
      * Adjust bind parameters.
      *
      * // When using queryBuilder.
-     * QueryHelper::buildedQuery(function () use ($query) {
-     *     Author::whereRaw('name like :name', ['name' => '%Shakespeare'])->get();
-     * });
+     * QueryHelper::buildedQuery(
+     *     fn () => Author::whereRaw('name like :name', ['name' => '%Shakespeare'])->get()
+     * );
      *
      * In the above case, parameter will be [0 => "%Shakespeare"] and query of
      * "select * from authors where like like: name" cannot be assembled.
