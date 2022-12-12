@@ -15,9 +15,7 @@ class QueryLogTest extends TestCase
      */
     public function it_can_get_the_results_of_laravel_query_log()
     {
-        $actual = QueryLog::getQueryLog(function () {
-            Author::find(1);
-        });
+        $actual = QueryLog::getQueryLog(fn () => Author::find(1));
 
         $expectedQuery    = 'select * from authors where authors.id = ? limit 1';
         $expectedBindings = [1];

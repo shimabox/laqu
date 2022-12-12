@@ -31,9 +31,7 @@ SQL;
         $expectedBindings = [1, 2];
 
         $this->assertQuery(
-            function () {
-                Author::find([1, 2]);
-            },
+            fn () => Author::find([1, 2]),
             $expectedQuery,
             $expectedBindings
         );
@@ -87,9 +85,7 @@ SQL;
         $expectedBindings = [1];
 
         $this->assertQuery(
-            function () {
-                Author::where('id', '=', 1)->get();
-            },
+            fn () => Author::where('id', '=', 1)->get(),
             $expectedQuery,
             $expectedBindings
         );
@@ -138,12 +134,10 @@ SQL;
         $expectedBindings = ['%Shakespeare'];
 
         $this->assertQuery(
-            function () {
-                Author::whereRaw(
-                    'name like :name',
-                    ['name' => '%Shakespeare']
-                )->get();
-            },
+            fn () => Author::whereRaw(
+                'name like :name',
+                ['name' => '%Shakespeare']
+            )->get(),
             $expectedQuery,
             $expectedBindings
         );
@@ -206,12 +200,10 @@ SQL;
         ];
 
         $this->assertQuery(
-            function () use ($from, $to) {
-                Author::whereIn('id', [1, 2])
-                    ->whereRaw('name like :name', ['name' => '%Shakespeare'])
-                    ->whereBetween('updated_at', [$from, $to])
-                    ->get();
-            },
+            fn () => Author::whereIn('id', [1, 2])
+                ->whereRaw('name like :name', ['name' => '%Shakespeare'])
+                ->whereBetween('updated_at', [$from, $to])
+                ->get(),
             $expectedQuery,
             $expectedBindings
         );
@@ -298,9 +290,7 @@ SQL;
         ];
 
         $this->assertQuery(
-            function () {
-                Book::find(1)->author()->get();
-            },
+            fn () => Book::find(1)->author()->get(),
             $expectedQueries,
             $expectedBindings
         );
@@ -325,9 +315,7 @@ SQL;
         ];
 
         $this->assertQuery(
-            function () {
-                Author::with('books')->get();
-            },
+            fn () => Author::with('books')->get(),
             $expectedQueries,
             $expectedBindings
         );

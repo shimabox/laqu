@@ -19,9 +19,7 @@ class QueryAnalyzerTest extends TestCase
      */
     public function it_can_return_a_query_instance()
     {
-        $analyzed = QueryAnalyzer::analyze(function () {
-            Author::where('id', '=', 1)->get();
-        });
+        $analyzed = QueryAnalyzer::analyze(fn () => Author::where('id', '=', 1)->get());
 
         $this->assertCount(1, $analyzed);
 
@@ -39,9 +37,7 @@ class QueryAnalyzerTest extends TestCase
      */
     public function it_can_return_a_query_after_the_build()
     {
-        $analyzed = QueryAnalyzer::analyze(function () {
-            Author::all();
-        });
+        $analyzed = QueryAnalyzer::analyze(fn () => Author::all());
 
         $this->assertCount(1, $analyzed);
 
@@ -74,9 +70,7 @@ class QueryAnalyzerTest extends TestCase
      */
     public function it_can_assert_question_mark_parameters_in_QueryBuilder()
     {
-        $analyzed = QueryAnalyzer::analyze(function () {
-            Author::where('id', '=', 1)->get();
-        });
+        $analyzed = QueryAnalyzer::analyze(fn () => Author::where('id', '=', 1)->get());
 
         $actual   = QueryFormatter::compress($analyzed[0]->getBuildedQuery());
         $expected = 'select * from authors where id = 1';
@@ -105,12 +99,12 @@ class QueryAnalyzerTest extends TestCase
      */
     public function it_can_assert_for_named_parameter_in_QueryBuilder()
     {
-        $analyzed = QueryAnalyzer::analyze(function () {
-            Author::whereRaw(
+        $analyzed = QueryAnalyzer::analyze(
+            fn () => Author::whereRaw(
                 'name like :name',
                 ['name' => '%Shakespeare']
-            )->get();
-        });
+            )->get()
+        );
 
         $actual   = QueryFormatter::compress($analyzed[0]->getBuildedQuery());
         $expected = 'select * from authors where name like \'%Shakespeare\'';
@@ -143,12 +137,12 @@ class QueryAnalyzerTest extends TestCase
         $from = $now->copy()->subDay();
         $to   = $now->copy()->addDay();
 
-        $analyzed = QueryAnalyzer::analyze(function () use ($from, $to) {
-            Author::whereIn('id', [1, 2])
+        $analyzed = QueryAnalyzer::analyze(
+            fn () => Author::whereIn('id', [1, 2])
                 ->whereRaw('name like :name', ['name' => '%Shakespeare'])
                 ->whereBetween('updated_at', [$from, $to])
-                ->get();
-        });
+                ->get()
+        );
 
         $actual   = QueryFormatter::compress($analyzed[0]->getBuildedQuery());
         $expected = 'select * from authors where id in (1, 2) and name like \'%Shakespeare\' and updated_at between \'' . $from . '\' and \'' . $to . '\'';

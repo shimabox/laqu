@@ -6,7 +6,8 @@ $finder = PhpCsFixer\Finder::create()
     ->in('src')
     ->in('tests');
 
-return PhpCsFixer\Config::create()
+$config = new PhpCsFixer\Config();
+return $config
     ->setRiskyAllowed(true)
     ->setRules([
         // Each line of multi-line DocComments must have an asterisk [PSR-5] and must be aligned with the first one.
@@ -33,6 +34,8 @@ return PhpCsFixer\Config::create()
         'compact_nullable_typehint' => true,
         // Concatenation should be spaced according configuration.
         'concat_space' => ['spacing' => 'one'],
+        // The PHP constants `true`, `false`, and `null` MUST be in lower case.
+        'constant_case' => true,
         // Equal sign in declare statement should be surrounded by spaces or not following configuration.
         'declare_equal_normalize' => true,
         // Force strict types declaration in all files. Requires PHP >= 7.0.
@@ -61,6 +64,8 @@ return PhpCsFixer\Config::create()
         'function_typehint_space' => true,
         // Configured annotations should be omitted from PHPDoc.
         'general_phpdoc_annotation_remove' => ['annotations' => ['author']],
+        // Renames PHPDoc tags..
+        'general_phpdoc_tag_rename' => ['replacements' => ['inheritDocs' => 'inheritDoc']],
         // Imports or fully qualifies global classes/functions/constants.
         'global_namespace_import' => true,
         // Include/Require and file path should be divided with a single space. File path should not be placed under brackets.
@@ -75,8 +80,6 @@ return PhpCsFixer\Config::create()
         'linebreak_after_opening_tag' => true,
         // Cast should be written in lower case.
         'lowercase_cast' => true,
-        // The PHP constants `true`, `false`, and `null` MUST be in lower case.
-        'lowercase_constants' => true,
         // PHP keywords MUST be in lower case.
         'lowercase_keywords' => true,
         // Class static references `self`, `static` and `parent` MUST be in lower case.
@@ -165,16 +168,12 @@ return PhpCsFixer\Config::create()
         'ordered_imports' => true,
         // PHPUnit annotations should be a FQCNs including a root namespace.
         'php_unit_fqcn_annotation' => true,
-        // Order `@covers` annotation of PHPUnit tests.
-        'php_unit_ordered_covers' => true,
         // PHPDoc should contain `@param` for all params.
         'phpdoc_add_missing_param_annotation' => ['only_untyped' => false],
         // All items of the given phpdoc tags must be either left-aligned or (by default) aligned vertically.
         'phpdoc_align' => true,
         // Docblocks should have the same indentation as the documented subject.
         'phpdoc_indent' => true,
-        // Fix PHPDoc inline tags, make `@inheritdoc` always inline.
-        'phpdoc_inline_tag' => true,
         // `@access` annotations should be omitted from PHPDoc.
         'phpdoc_no_access' => true,
         // `@package` and `@subpackage` annotations should be omitted from PHPDoc.
@@ -183,6 +182,8 @@ return PhpCsFixer\Config::create()
         'phpdoc_no_useless_inheritdoc' => true,
         // Annotations in PHPDoc should be ordered so that `@param` annotations come first, then `@throws` annotations, then `@return` annotations.
         'phpdoc_order' => true,
+        // Order phpdoc tags by value.
+        'phpdoc_order_by_value' => ['annotations' => ['covers', 'group']],
         // The type of `@return` annotations of methods returning a reference to itself must the configured one.
         'phpdoc_return_self_reference' => true,
         // Scalar types should always be written in the same form. `int` not `integer`, `bool` not `boolean`, `float` not `real` or `double`.
@@ -231,8 +232,8 @@ return PhpCsFixer\Config::create()
         'ternary_operator_spaces' => true,
         // Use `null` coalescing operator `??` where possible. Requires PHP >= 7.0.
         'ternary_to_null_coalescing' => true,
-        // PHP multi-line arrays should have a trailing comma.
-        'trailing_comma_in_multiline_array' => true,
+        // Multi-line arrays, arguments list, parameters list and match expressions must have a trailing comma.
+        'trailing_comma_in_multiline' => ['elements' => ['arrays']],
         // Arrays should be formatted like function/method arguments, without leading or trailing single line space.
         'trim_array_spaces' => true,
         // Unary operators should be placed adjacent to their operands.

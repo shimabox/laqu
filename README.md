@@ -22,7 +22,7 @@ This library is intended to be used during development.
 
 ## Requirement
 
-- PHP 7.3+ or newer(7.3, 7.4, 8.0)
+- PHP 7.4+ or newer(7.4, 8.0)
 - Laravel `6.x`, `7.x`, `8.x`
 
 ## Installation
@@ -48,7 +48,9 @@ Available within PHPUnit.
 ```php
 <?php
 
+use App\Repositories\ExampleRepository; // example.
 use Laqu\QueryAssertion;
+use Tests\TestCase;
 
 class QueryAssertionTest extends TestCase
 {
@@ -68,9 +70,7 @@ class QueryAssertionTest extends TestCase
         // Basic usage.
         $this->assertQuery(
             // Pass the process in which the query will be executed in the closure.
-            function () {
-                $this->exampleRepository->findById('a123');
-            },
+            fn () => $this->exampleRepository->findById('a123'),
             // Write the expected query.
             'select from user where id = ? and is_active = ?',
             // Define the expected bind values as an array.
@@ -86,10 +86,8 @@ class QueryAssertionTest extends TestCase
         // but there are cases where one method executes multiple queries.
         // In that case, define the query and bind value as an array pair as shown below.
         $this->assertQuery(
-            function () {
-                // For example, if multiple queries are executed in this process
-                $this->exampleRepository->findAll();
-            },
+            // For example, if multiple queries are executed in this process
+            fn () => $this->exampleRepository->findAll(),
             // Define an array for each expected query.
             [
                 'select from user where is_active = ?', // ※1
@@ -235,9 +233,7 @@ QueryLog is a wrap on [Basic Database Usage - Laravel - The PHP Framework For We
 
 use Laqu\Facades\QueryLog;
 
-$queryLog = QueryLog::getQueryLog(function () {
-    Author::find(1);
-});
+$queryLog = QueryLog::getQueryLog(fn () => Author::find(1));
 
 /*
 array:1 [
