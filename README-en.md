@@ -1,6 +1,6 @@
 # Laqu
 
-[ Japanese | [English](README-en.md) ]
+[ [Japanese](README.md) | English ]
 
 Laqu is **La**ravel Db **Qu**ery Helper.
 
@@ -12,12 +12,11 @@ Laqu is **La**ravel Db **Qu**ery Helper.
 
 ## Features
 
-- 実行されたdbクエリを確認できます
-  - PHPUnit でのアサーション、実行時間による並べ替え、ビルド後のクエリのチェックなど
+- Can check the executed db query
+  - Assertions in PHPUnit, sort by execution time, check queries after build, etc
 
 #### Attention
-
-このライブラリは、開発中に利用されることを想定しています。
+This library is intended to be used during development.
 
 ## See Also
 
@@ -46,8 +45,7 @@ $ composer install
 
 ### QueryAssertion
 
-期待するクエリが流れているかPHPUnitでアサーションするためのものです。  
-traitです。assertQuery()を使います。
+To assert with PHPUnit whether the expected query is flowing.
 
 ```php
 <?php
@@ -71,33 +69,34 @@ class QueryAssertionTest extends TestCase
 
     public function queryTest()
     {
-        // 基本的な使い方
+        // Basic usage.
         $this->assertQuery(
-            // クエリが実行される処理をクロージャに渡します
+            // Pass the process in which the query will be executed in the closure.
             fn () => $this->exampleRepository->findById('a123'),
-            // 期待するクエリを書きます
+            // Write the expected query.
             'select from user where id = ? and is_active = ?',
-            // バインドされる値を配列で定義します
-            // (bindするものがない場合は空配列を渡すか、引数は渡さないでOK)
+            // Define the expected bind values as an array.
+            // (If there is nothing to bind, pass an empty array or do not pass the argument)
             [
                 'a123',
                 1,
             ]
         );
 
-        // 複数のクエリを確認
-        // 基本的には 1メソッド1クエリの確認 を推奨しますが、中には1メソッドで複数クエリが流れる場合もあると思います。
-        // その場合は下記のようにクエリとバインド値を配列で対になるように定義してください。
+        // Assert multiple queries.
+        // Basically, it's a good idea to look at one query in one method,
+        // but there are cases where one method executes multiple queries.
+        // In that case, define the query and bind value as an array pair as shown below.
         $this->assertQuery(
-            // 例えばこの処理で複数のクエリが流れるとします
+            // For example, if multiple queries are executed in this process
             fn () => $this->exampleRepository->findAll(),
-            // 期待するクエリをそれぞれ配列で定義します
+            // Define an array for each expected query.
             [
                 'select from user where is_active = ?', // ※1
                 'select from admin_user where id = ? and is_active = ?', // ※2
                 'select from something', // ※3
             ],
-            // バインドされる値を二次元配列で定義(bindするものがない場合は空配列を渡してください)
+            // Define the bind values ​​as a two-dimensional array (pass empty array if there is nothing to bind).
             [
                 [ // ※1.
                     1,
@@ -106,7 +105,7 @@ class QueryAssertionTest extends TestCase
                     'b123',
                     1,
                 ],
-                // ※3 はバインド無しの想定なので空配列を渡します
+                // ※3 is no bind.
                 [],
             ]
         );
@@ -116,9 +115,9 @@ class QueryAssertionTest extends TestCase
 
 ### QueryAnalyzer
 
-クエリが流れるメソッドを渡して、どのようなクエリが流れたのか確認することができます。  
-`QueryAnalyzer::analyze()`で実行されたクエリの結果(`Laqu\Analyzer\QueryList`)が取得できます。  
-※ QueryListは`Laqu\Analyzer\Query`を持ちます
+You can check what queries were flowed by passing the method by which the queries were flowed.  
+You can get the result (`LaqueryAnalyzer\QueryList`) of the query executed by `QueryAnalyzer::analyze()`.  
+The `QueryList` has a `LaquAnalyzerQuery`.
 
 ```php
 <?php
@@ -233,8 +232,8 @@ dump($analyzed->sortBySlow());
 
 #### QueryLog
 
-QueryLogは [Basic Database Usage - Laravel - The PHP Framework For Web Artisans](https://laravel.com/docs/5.0/database#query-logging "Basic Database Usage - Laravel - The PHP Framework For Web Artisans") の処理をラップしたものです。  
-※ 実行時間関連はそこまで精密ではありません
+QueryLog is a wrap on [Basic Database Usage - Laravel - The PHP Framework For Web Artisans](https://laravel.com/docs/5.0/database#query-logging "Basic Database Usage - Laravel - The PHP Framework For Web Artisans") process.  
+※ Execution time is not that precise.
 
 ```php
 <?php
@@ -259,8 +258,8 @@ dump($queryLog);
 
 #### QueryHelper
 
-クエリとバインドパラメータを渡すと、実行されるクエリの確認ができます。  
-[pdo-debug/pdo-debug.php at master · panique/pdo-debug](https://github.com/panique/pdo-debug/blob/master/pdo-debug.php "pdo-debug/pdo-debug.php at master · panique/pdo-debug") を参考にしています。
+You can pass a query and bind parameters to see the query to be executed.  
+Referenced from [pdo-debug/pdo-debug.php at master · panique/pdo-debug](https://github.com/panique/pdo-debug/blob/master/pdo-debug.php "pdo-debug/pdo-debug.php at master · panique/pdo-debug").
 
 ```php
 <?php
@@ -289,14 +288,14 @@ echo $buildedQuery;
 
 ### QueryFormatter
 
-QueryFormatterは`Doctrine\SqlFormatter\SqlFormatter`のラッパーです。  
+QueryFormatter is a wrapper for `Doctrine\SqlFormatter\SqlFormatter`.  
 @see [doctrine/sql-formatter: A lightweight php class for formatting sql statements. Handles automatic indentation and syntax highlighting.](https://github.com/doctrine/sql-formatter "doctrine/sql-formatter: A lightweight php class for formatting sql statements. Handles automatic indentation and syntax highlighting.")
 
-デフォルトは`NullHighlighter`を利用していますが、CLI、HTMLでのフォーマットも可能です。
+The default is to use `NullHighlighter`, but it can also be formatted in CLI or HTML.
 
 #### format()
 
-デフォルトのHighlighterは`Doctrine\SqlFormatter\NullHighlighter`です。
+The default Highlighter is `Doctrine\SqlFormatter\NullHighlighter`.
 
 ```php
 <?php
@@ -333,7 +332,7 @@ LIMIT
 echo QueryFormatter::format($query);
 ```
 
-`Doctrine\SqlFormatter\CliHighlighter`を利用する場合は以下の通り、`CliHighlighter`をインジェクトしてください。
+If you use `Doctrine\SqlFormatter\CliHighlighter`, please inject `CliHighlighter` as follows.
 
 ```php
 <?php
@@ -346,10 +345,10 @@ $formatter = app()->make(QueryFormatter::class/* or 'queryFormatter' */, [new Cl
 
 echo $formatter->format($query);
 ```
-出力結果  
+Output is  
 ![example_CliHighlighter](https://github.com/shimabox/assets/raw/master/laqu/example_CliHighlighter.png)
 
-`Doctrine\SqlFormatter\HtmlHighlighter`を利用する場合は以下の通り、`HtmlHighlighter`をインジェクトしてください。
+If you use `Doctrine\SqlFormatter\HtmlHighlighter`, please inject `HtmlHighlighter` as follows.
 
 ```php
 <?php
@@ -362,13 +361,13 @@ $formatter = app()->make(QueryFormatter::class/* or 'queryFormatter' */, [new Ht
 
 echo $formatter->format($query);
 ```
-出力結果  
+Output is  
 ![example_HtmlHighlighter](https://github.com/shimabox/assets/raw/master/laqu/example_HtmlHighlighter.png)
 
 #### highlight()
 
-使い方は `format()` とほぼ同じです。  
-https://github.com/doctrine/sql-formatter#syntax-highlighting-only を参照してください。
+The usage is almost the same as the `format()`.  
+Please refer to https://github.com/doctrine/sql-formatter#syntax-highlighting-only.
 
 ```php
 <?php
@@ -382,8 +381,8 @@ echo QueryFormatter::highlight($query);
 
 #### compress()
 
-`compress()`はすべてのコメントと余計な空白を取り除いたクエリを返却します。  
-https://github.com/doctrine/sql-formatter#compress-query を参照してください。
+`compress()` returns a query with all comments and superfluous whitespace stripped out.  
+Please refer to https://github.com/doctrine/sql-formatter#compress-query.
 
 ```php
 <?php
@@ -440,4 +439,4 @@ $ composer ci
 
 ## TODO
 
-テストで確認しているクエリのパターンがまだまだ少ないです。
+There are not yet enough query patterns.
