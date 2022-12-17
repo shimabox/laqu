@@ -23,7 +23,11 @@ class QueryLog
      *
      * @param callable $queryCaller
      *
-     * @return array<int, array{"query": string, "bindings": array<int, mixed>, "time": float}>
+     * @return array<int, array{
+     *      "query": string,
+     *      "bindings": array<int|string, int|string>|array{},
+     *      "time": float
+     * }>
      */
     public function getQueryLog(callable $queryCaller): array
     {
