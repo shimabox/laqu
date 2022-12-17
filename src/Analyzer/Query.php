@@ -9,7 +9,7 @@ class Query
     /** @var string */
     private $query;
 
-    /** @var array<int, int> */
+    /** @var array<int|string, int|string>|array{} */
     private $bindings;
 
     /** @var float */
@@ -20,7 +20,7 @@ class Query
 
     /**
      * @param string          $query
-     * @param array<int, int> $bindings
+     * @param array<int|string, int|string>|array{} $bindings
      * @param float           $time
      * @param string          $buildedQuery
      */
@@ -42,7 +42,7 @@ class Query
     }
 
     /**
-     * @return array<int, int>
+     * @return array<int|string, int|string>|array{}
      */
     public function getBindings(): array
     {
