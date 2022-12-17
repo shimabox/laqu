@@ -19,10 +19,10 @@ class Query
     private $buildedQuery;
 
     /**
-     * @param string          $query
+     * @param string $query
      * @param array<int|string, int|string>|array{} $bindings
-     * @param float           $time
-     * @param string          $buildedQuery
+     * @param float  $time
+     * @param string $buildedQuery
      */
     public function __construct(
         string $query,
